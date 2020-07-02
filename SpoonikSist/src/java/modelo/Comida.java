@@ -2,18 +2,10 @@ package modelo;
 
 
 public class Comida {
-    private Inventario inventario =new Inventario();
     private Integer id;
     private String Nombre, Estado;
     private String Costo;
 
-    public Inventario getInventario() {
-        return inventario;
-    }
-
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
-    }
 
     public Integer getId() {
         return id;

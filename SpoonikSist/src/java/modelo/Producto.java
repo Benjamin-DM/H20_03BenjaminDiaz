@@ -1,7 +1,6 @@
 package modelo;
 
 public class Producto {
-    private Inventario inventario = new Inventario();
     private Integer id;
     private String Costo;
     private String Estado, Nombre;
@@ -13,15 +12,6 @@ public class Producto {
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
     }
-
-    public Inventario getInventario() {
-        return inventario;
-    }
-
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
-    }
-
     public Integer getId() {
         return id;
     }

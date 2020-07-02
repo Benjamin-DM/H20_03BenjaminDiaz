@@ -25,7 +25,7 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
     @Override
     public void editar(Comida modelo) throws Exception {
    try {
-            String sql = "UPDATE INVENTARIO SET NOMBRE=? ESTADO=?, COSTO=? WHERE ID=?";
+            String sql = "UPDATE COMIDA SET NOMBRE=? ESTADO=?, COSTO=? WHERE ID=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, modelo.getNombre());
             ps.setString(2, modelo.getEstado());
@@ -42,7 +42,7 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
     @Override
     public void eliminar(Comida modelo) throws Exception {
         try {
-            String sql = "UPDATE VENTA SET ESTADO=? WHERE ID=?";
+            String sql = "UPDATE COMIDA SET ESTADO=? WHERE ID=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, "I");
             ps.setInt(2, modelo.getId());
