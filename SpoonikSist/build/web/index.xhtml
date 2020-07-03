@@ -5,33 +5,40 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Spoonik</title>
     </h:head>
     <h:body>
         <h:form> 
-            <h:panelGrid columns="2">
-                <p:outputLabel value = "Nombre"/>
-                <p:inputText value = "${personaC.modelo.nombre}" required="true"/>            
-                <p:outputLabel value = "Apellido"/>
-                <p:inputText value ="${personaC.modelo.apellido}" required="true"/>
-                <p:outputLabel value = "Dni"/>
-                <p:inputText value ="${personaC.modelo.dni}" required="true"/>
-                <p:outputLabel value = "Estado"/>
-                <p:inputText value ="${personaC.modelo.estado}" required="true"/>
-                <p:outputLabel value = "Tipo"/>
-                <p:selectOneRadio value = "${personaC.modelo.tipo}" required="true">
-                    <f:selectItem itemValue="P" itemLabel="Propietario"/>
-                    <f:selectItem itemValue="I" itemLabel="Inquilino"/>
-                </p:selectOneRadio>
-                <p:outputLabel value = "Telefono"/>
-                <p:inputText value ="${personaC.modelo.telefono}" required="true"/>
-                <p:outputLabel value = "Sexo"/>
-                <p:selectOneRadio value ="${personaC.modelo.sexo}" required="true">
-                    <f:selectItem itemValue="M" itemLabel="Masculino"/>
-                    <f:selectItem itemValue="F" itemLabel="Femenino"/>
-                </p:selectOneRadio>
-                <p:commandButton icon="pi pi-save" value = "Agregar" actionListener="${personaC.registrar()}"/> 
-            </h:panelGrid>
+            <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
+            <p:fieldset legend = "Datos Persona">
+                <h:panelGrid columns="3">
+                    <p:outputLabel value = "Nombre" for="txtNombre"/>
+                    <p:inputText value = "${personaC.modelo.NOMPER}" required="true" id="txtNombre"/> 
+                    <p:message for="txtNombre"/>
+                    <p:outputLabel value = "Apellido" for="txtApellido"/>
+                    <p:inputText value ="${personaC.modelo.APEPER}" required="true" id="txtApellido"/>
+                    <p:message for="txtApellido"/>
+                    <p:outputLabel value = "Dni" for="txtDni"/>
+                    <p:inputText value ="${personaC.modelo.DNIPER}" required="true" id="txtDni"/>
+                    <p:message for="txtDni"/>
+                    <p:outputLabel value = "Tipo" for="rbTipo"/>
+                    <p:selectOneRadio value = "${personaC.modelo.TIPPER}" required="true" id="rbTipo" >
+                        <f:selectItem itemValue="P" itemLabel="Comensal"/>
+                        <f:selectItem itemValue="I" itemLabel="Administrador"/>
+                    </p:selectOneRadio>
+                    <p:message for="rbTipo"/>
+                    <p:outputLabel value = "Telefono" for="txtTelefono"/>
+                    <p:inputText value ="${personaC.modelo.TELPER}" required="true" id="txtTelefono"/>
+                    <p:message for="txtTelefono"/>
+                    <p:outputLabel value = "Sexo" for="rbSexo"/>
+                    <p:selectOneRadio value ="${personaC.modelo.SEXPER}" required="true" id="rbSexo">
+                        <f:selectItem itemValue="M" itemLabel="Masculino"/>
+                        <f:selectItem itemValue="F" itemLabel="Femenino"/>
+                    </p:selectOneRadio>
+                    <p:message for="rbSexo"/>
+                </h:panelGrid>
+                <p:commandButton icon="pi pi-save" value = "Agregar" actionListener="${personaC.registrar()}" update="@form,mensaje"/>
+                </p:fieldset>
         </h:form>
     </h:body>
 </html>

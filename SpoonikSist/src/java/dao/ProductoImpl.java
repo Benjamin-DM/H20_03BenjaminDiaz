@@ -10,10 +10,10 @@ public class ProductoImpl extends Conexion implements ICrud<Producto>{
     @Override
     public void registrar(Producto modelo) throws Exception {
          try {
-            String sql = "INSERT VENTA (NOMBRE, COSTO, ESTADO) values (?,?,'A')";
+            String sql = "INSERT PRODUCTO (NOMPRO, CSTPRO, ESTPRO) values (?,?,'A')";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
-            ps.setString(1, modelo.getNombre());
-            ps.setString(2, modelo.getCosto());
+            ps.setString(1, modelo.getNOMPRO());
+            ps.setString(2, modelo.getCSTPRO());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -25,12 +25,12 @@ public class ProductoImpl extends Conexion implements ICrud<Producto>{
     @Override
     public void editar(Producto modelo) throws Exception {
    try {
-            String sql = "UPDATE PRODUCTO SET NOMBRE=?, COSTO=?, ESTADO=? WHERE ID=?";
+            String sql = "UPDATE PRODUCTO SET NOMPER=?, CSTPRO=?, ESTPRO=? WHERE IDPRO=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
-            ps.setString(1, modelo.getNombre());
-            ps.setString(2, modelo.getCosto());
-            ps.setString(3, modelo.getEstado());
-            ps.setInt(4, modelo.getId());
+            ps.setString(1, modelo.getNOMPRO());
+            ps.setString(2, modelo.getCSTPRO());
+            ps.setString(3, modelo.getESTPRO());
+            ps.setInt(4, modelo.getIDPRO());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -43,10 +43,10 @@ public class ProductoImpl extends Conexion implements ICrud<Producto>{
     @Override
     public void eliminar(Producto modelo) throws Exception {
         try {
-            String sql = "UPDATE PRODUCTO SET ESTADO=? WHERE ID=?";
+            String sql = "UPDATE PRODUCTO SET ESTPRO=? WHERE IDPRO=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, "I");
-            ps.setInt(2, modelo.getId());
+            ps.setInt(2, modelo.getIDPRO());
             ps.executeUpdate();
             ps.clearParameters();
             ps.close();

@@ -10,10 +10,10 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
     @Override
     public void registrar(Comida modelo) throws Exception {
        try {
-            String sql = "INSERT INTO COMIDA (NOMBRE, COSTO, ESTADO) VALUES (?,?,'A')";
+            String sql = "INSERT INTO COMIDA (NOMCOM, CSTCOM, ESTCOM) VALUES (?,?,'A')";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
-            ps.setString(1, modelo.getNombre());
-            ps.setString(2, modelo.getCosto());
+            ps.setString(1, modelo.getNOMCOM());
+            ps.setString(2, modelo.getCSTCOM());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -25,12 +25,12 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
     @Override
     public void editar(Comida modelo) throws Exception {
    try {
-            String sql = "UPDATE COMIDA SET NOMBRE=? ESTADO=?, COSTO=? WHERE ID=?";
+            String sql = "UPDATE COMIDA SET NOMCOM=? ESTCOM=?, CSTCOM=? WHERE IDCOM=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
-            ps.setString(1, modelo.getNombre());
-            ps.setString(2, modelo.getEstado());
-            ps.setString(3, modelo.getCosto());
-            ps.setInt(4, modelo.getId());
+            ps.setString(1, modelo.getNOMCOM());
+            ps.setString(2, modelo.getESTCOM());
+            ps.setString(3, modelo.getCSTCOM());
+            ps.setInt(4, modelo.getIDCOM());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -42,10 +42,10 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
     @Override
     public void eliminar(Comida modelo) throws Exception {
         try {
-            String sql = "UPDATE COMIDA SET ESTADO=? WHERE ID=?";
+            String sql = "UPDATE COMIDA SET ESTCOM=? WHERE IDCOM=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, "I");
-            ps.setInt(2, modelo.getId());
+            ps.setInt(2, modelo.getIDCOM());
             ps.executeUpdate();
             ps.clearParameters();
             ps.close();

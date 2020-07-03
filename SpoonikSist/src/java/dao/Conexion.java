@@ -21,9 +21,9 @@ public class Conexion {
           
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conexion = DriverManager.getConnection(
-                    "jdbc:sqlserver://benjamin123.database.windows.net;database=NombreDatabase",
-                    "usuario",
-                    "psswrd");
+                    "jdbc:sqlserver://BENJAMINDM\\SS19;database=Spoonik",
+                    "sa",
+                    "123456");
              
             //Oracle 
             /*

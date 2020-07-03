@@ -2,40 +2,45 @@ package modelo;
 
 
 public class Comida {
-    private Integer id;
-    private String Nombre, Estado;
-    private String Costo;
+    private Integer IDCOM;
+    private String NOMCOM, ESTCOM;
+    private String CSTCOM;
 
-
-    public Integer getId() {
-        return id;
+    public Integer getIDCOM() {
+        return IDCOM;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIDCOM(Integer IDCOM) {
+        this.IDCOM = IDCOM;
     }
 
-    public String getNombre() {
-        return Nombre;
+    public String getNOMCOM() {
+        return NOMCOM;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNOMCOM(String NOMCOM) {
+        this.NOMCOM = NOMCOM;
     }
 
-    public String getEstado() {
-        return Estado;
+    public String getESTCOM() {
+        return ESTCOM;
     }
 
-    public void setEstado(String Estado) {
-        this.Estado = Estado;
+    public void setESTCOM(String ESTCOM) {
+        this.ESTCOM = ESTCOM;
     }
 
-    public String getCosto() {
-        return Costo;
+    public String getCSTCOM() {
+        return CSTCOM;
     }
 
-    public void setCosto(String Costo) {
-        this.Costo = Costo;
+    public void setCSTCOM(String CSTCOM) {
+        this.CSTCOM = CSTCOM;
     }
+
+    @Override
+    public String toString() {
+        return "Comida{" + "IDCOM=" + IDCOM + ", NOMCOM=" + NOMCOM + ", ESTCOM=" + ESTCOM + ", CSTCOM=" + CSTCOM + '}';
+    }
+   
 }

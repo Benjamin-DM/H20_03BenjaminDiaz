@@ -2,77 +2,80 @@ package modelo;
 
 
 public class Persona {
-    private Integer id;
-    private String Nombre,Apellido,Dni,Estado,Tipo,Telefono,Sexo;
+    private Integer IDPER;
+    private String NOMPER,APEPER,DNIPER,TIPPER,SEXPER,TELPER,ESTPER;
 
-    public Integer getId() {
-        return id;
+     public Integer getIDPER() {
+        return IDPER;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIDPER(Integer IDPER) {
+        this.IDPER = IDPER;
     }
 
-    public String getNombre() {
-        return Nombre;
+    public String getNOMPER() {
+        return NOMPER;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNOMPER(String NOMPER) {
+        this.NOMPER = NOMPER;
     }
 
-    public String getApellido() {
-        return Apellido;
+    public String getAPEPER() {
+        return APEPER;
     }
 
-    public void setApellido(String Apellido) {
-        this.Apellido = Apellido;
+    public void setAPEPER(String APEPER) {
+        this.APEPER = APEPER;
     }
 
-    public String getDni() {
-        return Dni;
+    public String getDNIPER() {
+        return DNIPER;
     }
 
-    public void setDni(String Dni) {
-        this.Dni = Dni;
+    public void setDNIPER(String DNIPER) {
+        this.DNIPER = DNIPER;
     }
 
-    public String getEstado() {
-        return Estado;
+    public String getTIPPER() {
+        return TIPPER;
     }
 
-    public void setEstado(String Estado) {
-        this.Estado = Estado;
+    public void setTIPPER(String TIPPER) {
+        this.TIPPER = TIPPER;
     }
 
-    public String getTipo() {
-        return Tipo;
+    public String getSEXPER() {
+        return SEXPER;
     }
 
-    public void setTipo(String Tipo) {
-        this.Tipo = Tipo;
+    public void setSEXPER(String SEXPER) {
+        this.SEXPER = SEXPER;
     }
 
-    public String getTelefono() {
-        return Telefono;
+    public String getTELPER() {
+        return TELPER;
     }
 
-    public void setTelefono(String Telefono) {
-        this.Telefono = Telefono;
+    public void setTELPER(String TELPER) {
+        this.TELPER = TELPER;
     }
 
-    public String getSexo() {
-        return Sexo;
+    public String getESTPER() {
+        return ESTPER;
     }
 
-    public void setSexo(String Sexo) {
-        this.Sexo = Sexo;
+    public void setESTPER(String ESTPER) {
+        this.ESTPER = ESTPER;
     }
 
     @Override
     public String toString() {
-        return "PERSONA{" + "id=" + id + ", Nombre=" + Nombre + ", Apellido=" + Apellido + ", Dni=" + Dni + ", Estado=" + Estado + ", Tipo=" + Tipo + ", Telefono=" + Telefono + ", Sexo=" + Sexo + '}';
+        return "Persona{" + "IDPER=" + IDPER + ", NOMPER=" + NOMPER + ", APEPER=" + APEPER + ", DNIPER=" + DNIPER + ", TIPPER=" + TIPPER + ", SEXPER=" + SEXPER + ", TELPER=" + TELPER + ", ESTPER=" + ESTPER + '}';
     }
+
+    
+    
 
   
 }

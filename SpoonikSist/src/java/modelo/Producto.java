@@ -1,40 +1,58 @@
 package modelo;
 
 public class Producto {
-    private Integer id;
-    private String Costo;
-    private String Estado, Nombre;
+    private Integer IDPRO, CANPRO;
+    private String CSTPRO;
+    private String ESTPRO, NOMPRO;
 
-    public String getNombre() {
-        return Nombre;
-    }
-
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
-    }
-    public Integer getId() {
-        return id;
+    public Integer getIDPRO() {
+        return IDPRO;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIDPRO(Integer IDPRO) {
+        this.IDPRO = IDPRO;
     }
 
-    public String getCosto() {
-        return Costo;
+    public Integer getCANPRO() {
+        return CANPRO;
     }
 
-    public void setCosto(String Costo) {
-        this.Costo = Costo;
+    public void setCANPRO(Integer CANPRO) {
+        this.CANPRO = CANPRO;
     }
 
-    public String getEstado() {
-        return Estado;
+    public String getCSTPRO() {
+        return CSTPRO;
     }
 
-    public void setEstado(String Estado) {
-        this.Estado = Estado;
+    public void setCSTPRO(String CSTPRO) {
+        this.CSTPRO = CSTPRO;
     }
+
+    public String getESTPRO() {
+        return ESTPRO;
+    }
+
+    public void setESTPRO(String ESTPRO) {
+        this.ESTPRO = ESTPRO;
+    }
+
+    public String getNOMPRO() {
+        return NOMPRO;
+    }
+
+    public void setNOMPRO(String NOMPRO) {
+        this.NOMPRO = NOMPRO;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" + "IDPRO=" + IDPRO + ", CANPRO=" + CANPRO + ", CSTPRO=" + CSTPRO + ", ESTPRO=" + ESTPRO + ", NOMPRO=" + NOMPRO + '}';
+    }
+
+    
+
+    
 
     
 }
