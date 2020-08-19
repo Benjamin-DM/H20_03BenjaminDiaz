@@ -1,0 +1,86 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Comida</title>
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+    </h:head>
+    <h:body>
+        <h1>Comidas</h1>
+        <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
+        <p:menubar>
+            <p:menuitem value="Inicio" url="/Spoonik/faces/index.xhtml"/>
+            <p:menuitem value="Producto" url="/Spoonik/faces/vistas/producto.xhtml"/>
+            <p:menuitem value="Persona" url="/Spoonik/faces/vistas/persona.xhtml"/>
+            <p:menuitem value="Asignación" url="/Spoonik/faces/vistas/asignacion.xhtml"/>
+            <p:menuitem value="Seleccion de Platos" url="/Spoonik/faces/vistas/asignacionP.xhtml"/>
+        </p:menubar>
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:commandButton value="Add Comida" oncomplete="PF('wdComida').show(); "/>
+            </p:panelGrid>
+        </h:form>
+        <p:dialog widgetVar="wdComida" modal="true" showEffect="clip" header="Nuevo Registro" resizable="false">
+            <p:ajax event="close" listener="${comidaC.limpiar()}" update=":dlgComida"/>
+            <h:form id="dlgComida">
+
+                <h:panelGrid columns="2">
+                    <p:outputLabel value = "Nombre" for="txtNombreCom"/>
+                    <p:inputText value = "${comidaC.modelo.NOMCOM}" required="true" id="txtNombreCom" > 
+                        <f:validateLength minimum="2" maximum="20" />
+                        <p:keyFilter regEx="/[ABCDEFGHIJKLMNÑOPQRSTUVWXYZ ]/i"/> 
+                    </p:inputText>
+
+                    <p:outputLabel value = "Costo" for="txtCostoCom"/>
+                    <p:inputText value ="${comidaC.modelo.COSCOM}" required="true" id="txtCostoCom">
+                        <f:validateLength maximum="5"/>
+
+                        <p:keyFilter regEx="/[123456789 0]/i"/> 
+                    </p:inputText>
+
+                    <p:outputLabel value = "Cantidad" for="txtCantidadCom"/>
+                    <p:inputText value ="${comidaC.modelo.CANCOM}" required="true" id="txtCantidadCom" maxlength="3">
+                        <p:keyFilter regEx="/[123456789 0]/i"/> 
+                    </p:inputText>
+
+                    <p:outputLabel value = "TipoCom" for="rbTipoCom"/>
+                    <p:selectOneRadio value = "${comidaC.modelo.TIPCOM}" required="true" id="rbTipoCom" >
+                        <f:selectItem itemValue="G" itemLabel="General"/>
+                        <f:selectItem itemValue="D" itemLabel="Dieta"/>
+                    </p:selectOneRadio>
+                </h:panelGrid>
+                <p:commandButton icon="pi pi-save" value="agregar" oncomplete="PF('wdComida').hide();" actionListener="${comidaC.registrar()}" 
+                                 update="dlgComida :frmComida :mensaje" rendered="${comidaC.modelo.IDCOM == 0}"/>
+                <p:commandButton icon="pi pi-save" value="Actualizar" oncomplete="PF('wdComida').hide();" actionListener="${comidaC.editar()}" 
+                                 update="dlgComida :frmComida :mensaje" rendered="${comidaC.modelo.IDCOM != 0}"/>
+            </h:form>
+        </p:dialog>
+        <h:form id="frmComida"> 
+            <p:dataTable value="${comidaC.listarC}" var="c">
+                <p:column headerText="NOMBRE">
+                    <h:outputText value="${c.NOMCOM}"/>
+                </p:column>
+                <p:column headerText="COSTO">
+                    <h:outputText value="${c.COSCOM}"/>
+                </p:column>
+                <p:column headerText="CANTIDAD">
+                    <h:outputText value="${c.CANCOM}"/>
+                </p:column>
+                <p:column headerText="TIPO">
+                    <h:outputText value="${c.TIPCOM}">
+                        <f:converter converterId="tipoproducto"/>
+                    </h:outputText> 
+                </p:column>
+                <p:column headerText="ACCIONES">
+                    <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdComida').show();" actionListener="${comidaC.llenardatos(c)}" 
+                                     update=":dlgComida"/>
+                    <p:commandButton icon="ui-icon-circle-close" actionListener="${comidaC.eliminar(c)}" update=":frmComida :mensaje" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Spoonik</title>
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+    </h:head>
+    <h:body>
+        <h1>Persona</h1>
+        <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
+        <p:menubar>
+            <p:menuitem value="Inicio" url="/Spoonik/faces/index.xhtml"/>
+            <p:menuitem value="Producto" url="/Spoonik/faces/vistas/producto.xhtml"/>
+            <p:menuitem value="Comida" url="/Spoonik/faces/vistas/comida.xhtml"/>
+            <p:menuitem value="Asignación" url="/Spoonik/faces/vistas/asignacion.xhtml"/>
+            <p:menuitem value="Seleccion de Platos" url="/Spoonik/faces/vistas/asignacionP.xhtml"/>
+        </p:menubar>
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:commandButton value="Add Persona" oncomplete="PF('wdPersona').show(); "/>
+            </p:panelGrid>
+        </h:form>
+        <p:dialog widgetVar="wdPersona" id="dlgdatos" modal="true" showEffect="clip" header="Nuevo Registro" resizable="false">
+            <p:ajax event="close" listener="${personaC.limpiar()}" update=":dlgPersona"/>
+            <h:form id="dlgPersona">
+
+                <h:panelGrid columns="1">
+                    <p:outputLabel value = "Nombre" for="txtNombre"/>
+                    <p:inputText value = "${personaC.modelo.NOMPER}" required="true" id="txtNombre" > 
+                        <f:validateLength minimum="2" maximum="20" />
+
+                        <p:keyFilter regEx="/[ABCDEFGHIJKLMNÑOPQRSTUVWXYZ]/i"/> 
+                    </p:inputText>
+
+                    <p:outputLabel value = "Apellido" for="txtApellido"/>
+                    <p:inputText value ="${personaC.modelo.APEPER}" required="true" id="txtApellido">
+                        <f:validateLength minimum="2" maximum="20"/>
+
+                        <p:keyFilter regEx="/[ABCDEFGHIJKLMNÑOPQRSTUVWXYZ]/i"/> 
+                    </p:inputText>
+                 <!--<p:outputLabel value="DNI"/>
+               <p:inputMask id="dni" value="#{personaC.modelo.DNIPER}" placeholder="Escribe DNI">
+                             maxlength="8" required="true" requiredMessage="Falta dni" mask="99999999">
+                    <p:ajax event="keyup" update="nombre" listener="#{personaC.llenardatos(per)}"/>
+                    <p:ajax event="keyup" update="apellidos" listener="#{personaC.llenardatos(per)}"/>
+                </p:inputMask>-->
+
+                <p:outputLabel value = "Dni" for="txtDni"/>
+                <p:inputText value ="${personaC.modelo.DNIPER}" required="true" id="txtDni" maxlength="8">
+                    <p:keyFilter regEx="/[123456789]/i"/> 
+                </p:inputText>
+
+                <p:outputLabel value = "Tipo" for="rbTipo"/>
+                <p:selectOneRadio value = "${personaC.modelo.TIPPER}" required="true" id="rbTipo" >
+                    <f:selectItem itemValue="P" itemLabel="Profesor"/>
+                    <f:selectItem itemValue="A" itemLabel="Alumno"/>
+                    <f:selectItem itemValue="T" itemLabel="Trabajador"/>
+
+                </p:selectOneRadio>
+
+                <p:outputLabel value = "Telefono" for="txtTelefono"/>
+                <p:inputText value ="${personaC.modelo.TELPER}" required="true" id="txtTelefono" maxlength="9">
+                    <p:keyFilter regEx="/[123456789]/i"/> 
+                </p:inputText>
+                <p:outputLabel value = "Sexo" for="rbSexo"/>
+                <p:selectOneRadio value ="${personaC.modelo.SEXPER}" required="true" id="rbSexo">
+                    <f:selectItem itemValue="M" itemLabel="Masculino"/>
+                    <f:selectItem itemValue="F" itemLabel="Femenino"/>
+
+                </p:selectOneRadio>
+
+                </h:panelGrid>
+                <p:commandButton icon="pi pi-save" value="agregar" oncomplete="PF('wdPersona').hide();" actionListener="${personaC.registrar()}" 
+                                 update="dlgPersona :frmPersona :mensaje" rendered="${personaC.modelo.IDPER == 0}"/>
+                <p:commandButton icon="pi pi-save" value="Actualizar" oncomplete="PF('wdPersona').hide();" actionListener="${personaC.editar()}" 
+                                 update="dlgPersona :frmPersona :mensaje" rendered="${personaC.modelo.IDPER != 0}"/>
+            </h:form>
+        </p:dialog>
+        <h:form id="frmPersona"> 
+            <p:dataTable value="${personaC.listarP}" var="p">
+                <p:column headerText="NOMBRE">
+                    <h:outputText value="${p.NOMPER}"/>
+                </p:column>
+                <p:column headerText="APELLIDO">
+                    <h:outputText value="${p.APEPER}"/>
+                </p:column>
+                <p:column headerText="DNI">
+                    <h:outputText value="${p.DNIPER}"/>
+                </p:column>
+                <p:column headerText="TIPO">
+                    <h:outputText value="${p.TIPPER}">
+                        <f:converter converterId="tipopersona"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="CELULAR">
+                    <h:outputText value="${p.TELPER}"/>
+                </p:column>
+                <p:column headerText="SEXO">
+                    <h:outputText value="${p.SEXPER}">
+                        <f:converter converterId="sexoConverter"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="ACCIONES">
+                    <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdPersona').show();" actionListener="${personaC.llenardatos(p)}" 
+                                     update=":dlgPersona"/>
+                    <p:commandButton icon="ui-icon-circle-close" actionListener="${personaC.eliminar(p)}" update=":frmPersona :mensaje" />
+                </p:column>
+            </p:dataTable>
+        </h:form>      
+    </h:body>
+</html>
