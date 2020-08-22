@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Spoonik</title>
+        <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+    </h:head>
+    <h:body>
+        <h1>Producto</h1>
+        <h:form>
+             <p:menubar>
+                <p:menuitem value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
+                <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
+                <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
+                <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
+                <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
+                <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
+            </p:menubar>
+        </h:form>
+        <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:commandButton value="Nuevo Producto" oncomplete="PF('wdProducto').show(); "/>            
+            </p:panelGrid>
+        </h:form>
+
+
+        <!-- dialogo-->
+        <p:dialog widgetVar="wdProducto" id="dlgdatos" modal="true" showEffect="clip" header="Nuevo Registro" resizable="false">
+            <p:ajax event="close" listener="${productoC.limpiar()}" update=":dlgProducto"/>
+            <h:form id="dlgProducto">
+
+                <h:panelGrid columns="2">
+                    <p:outputLabel value="Nombre" for="txtNombre"/> 
+                    <p:inputText value ="${productoC.modelo.NOMPRO}" required="true" id="txtNombre" >
+                        <f:validateLength minimum="2" maximum="30" />
+                        <p:keyFilter regEx="/[ABCDEFGHIJKLMNÑOPQRSTUVWXYZ ]/i"/> 
+                    </p:inputText>
+                    <p:outputLabel value = "Tipo" for="rbtTipo"/>
+                    <p:selectOneRadio value ="${productoC.modelo.TIPPRO}" required="true" id="rbtTipo">
+                        <p:ajax event="valueChange" listener="${productoC.cambiar()}" update="txtCostoPro dlgdatos" />
+                        <f:selectItem itemValue="E" itemLabel="Envasados"/>
+                        <f:selectItem itemValue="P" itemLabel="Postres"/>
+                    </p:selectOneRadio> 
+                    <p:outputLabel value = "Costo" for="txtCostoPro"/>
+                    <p:inputText value ="${productoC.modelo.COSPRO}" required="true" id="txtCostoPro">
+                        <p:ajax event="keyup" listener="${productoC.suma()}" update="Preven"/>
+                        <f:validateLength maximum="5"/>
+                        <p:keyFilter regEx="/[1234567890]/i"/> 
+                    </p:inputText>
+                    <p:outputLabel value = "Precio Venta" />
+                    <p:outputLabel value="${productoC.uno}" id="Preven"/>
+                    <p:outputLabel value = "Cantidad" for="txtCantidadPro"/>
+                    <p:inputText value ="${productoC.modelo.CANPRO}" required="true" id="txtCantidadPro" maxlength="3">
+                        <p:keyFilter regEx="/[1234567890]/i"/> 
+                    </p:inputText>
+
+                </h:panelGrid>
+                <p:commandButton icon="pi pi-save" value="Agregar" oncomplete="PF('wdProducto').hide();" actionListener="${productoC.registrar()}" 
+                                 update="dlgProducto :frmproducto :mensaje" rendered="${productoC.modelo.IDPRO == 0}"/>
+                <p:commandButton icon="pi pi-save" value="Actualizar" oncomplete="PF('wdProducto').hide();" actionListener="${productoC.editar()}" 
+                                 update="dlgProducto :frmproducto :mensaje" rendered="${productoC.modelo.IDPRO != 0}"/>
+            </h:form> 
+        </p:dialog>
+        <!--Dialogo de actualizar-->
+
+        <!-- aca termina-->
+        <h:form id="frmproducto"> 
+            <p:dataTable value="${productoC.listarPr}" var="p">
+                <p:column headerText="NOMBRE">
+                    <h:outputText value="${p.NOMPRO}"/>
+                </p:column>
+                <p:column headerText="COSTO">
+                    <h:outputText value="S/.${p.COSPRO}">
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="PRECIO VENTA">
+                    <h:outputText value="S/.${p.PREVENPRO}">
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="CANTIDAD">
+                    <h:outputText value="${p.CANPRO} unidades"/>
+                </p:column>
+                <p:column headerText="TIPO">
+                    <h:outputText value="${p.TIPPRO}">
+                        <f:converter converterId="tipoproducto"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="ACCIONES">
+                    <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdProducto').show();" actionListener="${productoC.llenardatos(p)}" 
+                                     update=":dlgProducto"/>
+                    <p:commandButton icon="ui-icon-circle-close" actionListener="${productoC.eliminar(p)}" update=":frmproducto :mensaje" />
+
+                </p:column>
+            </p:dataTable>
+        </h:form>      
+    </h:body>
+
+</html>

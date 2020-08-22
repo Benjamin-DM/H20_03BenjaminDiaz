@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Asignacion Comida</title>
+    </h:head>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+    <h:body>
+        <h1>Asignacion de Comidas</h1>
+        <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
+         <p:menubar>
+                <p:menuitem value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
+                <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
+                <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
+                <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
+                <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
+                <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
+            </p:menubar>
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:commandButton value="Add AsignacionComida" oncomplete="PF('wdAsignacion').show(); "/>
+            </p:panelGrid>
+        </h:form>
+        <!-- esto es mi dialogo-->
+        <p:dialog widgetVar="wdAsignacion" modal="true" showEffect="Clip" header="Nuevo Registro" resizable="false">
+            <p:ajax event="close" listener="${AsignacionC.limpiar()}" update="dlgAsignacion"/>
+            <h:form id="dlgAsignacion">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value = "Seleccione la comida" for="Comida"/>
+                    <p:selectOneMenu id="Comida" value="${AsignacionC.modelo.IDCOM}" required="true">
+                        <f:selectItem itemLabel="Seleccione la comida " itemValue="" />
+                        <f:selectItems value="${comidaC.listarC}" var="com" itemLabel="${com.NOMCOM}" itemValue="${com.IDCOM}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Fecha" for="FechaAsig"/>
+                    <p:calendar  id="FechaAsig" value="${AsignacionC.newDate}" pattern="yyyy/MM/dd" required="true" locale="es" />
+
+                    <p:commandButton icon="pi pi-save" value="agregar" oncomplete="PF('wdAsignacion').hide();" actionListener="${AsignacionC.registrar()}" 
+                                     update="dlgAsignacion :frmAsignacion :mensaje" rendered="${AsignacionC.modelo.IDASICOM == 0}"/>
+                    <p:commandButton icon="pi pi-save" value="Actualizar" oncomplete="PF('wdAsignacion').hide();" actionListener="${AsignacionC.editar()}" 
+                                     update="dlgAsignacion :frmAsignacion :mensaje" rendered="${AsignacionC.modelo.IDASICOM != 0}"/>
+
+                </h:panelGrid>
+            </h:form>
+
+        </p:dialog>
+        <!-- esto es la tabla-->
+        <h:form id="frmAsignacion">
+            <p:dataTable value="${AsignacionC.listarA}" var="a">
+                <p:column headerText="NombreComida">
+                    <h:outputText value="${a.comida.NOMCOM}"/>                    
+                </p:column>
+                <p:column headerText="TipoComida">
+                    <h:outputText value="${a.comida.TIPCOM}">
+                        <f:converter converterId="tipoproducto"/>
+                    </h:outputText>                    
+                </p:column>
+                <p:column headerText="FechaAsignacion">
+                    <h:outputText value="${a.FECASICOM}"/>                    
+                </p:column>
+                <p:column headerText="ACCIONES">
+                    <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdAsignacion').show();" actionListener="${AsignacionC.llenardatos(a)}" 
+                                     update=":dlgAsignacion :frmAsignacion :mensaje"/>
+                    <p:commandButton icon="ui-icon-circle-close" actionListener="${AsignacionC.eliminar(a)}" update=":frmAsignacion :mensaje :dlgAsignacion" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

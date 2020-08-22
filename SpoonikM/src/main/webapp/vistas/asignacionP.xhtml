@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Asignacion Persona</title>
+    </h:head>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+    <h:body>
+        <h1>Seleccion de Comidas</h1>
+        <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
+         <p:menubar>
+                <p:menuitem value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
+                <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
+                <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
+                <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
+                <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
+                <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
+            </p:menubar>
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:commandButton value="Agregar Persona" oncomplete="PF('wdAsignacionP').show(); "/>
+            </p:panelGrid>
+        </h:form>
+        <!-- Dialogo -->
+        <p:dialog widgetVar="wdAsignacionP" modal="true" showEffect="Clip" header="Nuevo Registro" resizable="false">
+            <p:ajax event="close" listener="${AsignacionPC.limpiar()}" update="dlgAsignacionP"/>
+            <h:form id="dlgAsignacionP">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value = "Seleccione la Persona" for="Persona"/>
+                    <p:selectOneMenu id="Persona" value="${AsignacionPC.modelo.IDPER}" required="true">
+                        <f:selectItem itemLabel="Seleccione la Persona " itemValue="" />
+                        <f:selectItems value="${personaC.listar()}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value = "Seleccione la comida" for="Comida"/>
+                    <p:selectOneMenu id="Comida" value="${AsignacionC.modelo.IDCOM}" required="true">
+                        <f:selectItem itemLabel="Seleccione la Comida " itemValue="" />
+                        <f:selectItems value="${comidaC.listar()}" var="asc" itemLabel="${asc.NOMCOM}" itemValue="${asc.IDCOM}"/>
+                    </p:selectOneMenu>
+                    <p:commandButton icon="pi pi-save" value="agregar" oncomplete="PF('wdAsignacionP').hide();" actionListener="${AsignacionPC.registrar()}" 
+                                     update="dlgAsignacionP :frmAsignacionP :mensaje" rendered="${AsignacionPC.modelo.IDASIPER == 0}"/>
+                    <p:commandButton icon="pi pi-save" value="Actualizar" oncomplete="PF('wdAsignacionP').hide();" actionListener="${AsignacionPC.editar()}" 
+                                     update="dlgAsignacionP :frmAsignacionP :mensaje" rendered="${AsignacionPC.modelo.IDASIPER != 0}"/>
+
+                </h:panelGrid>
+            </h:form>
+        </p:dialog>
+        <h:form id="frmAsignacionP">
+            <p:dataTable value="${AsignacionPC.listarAP}" var="ap">
+                <p:column headerText="NombrePersona">
+                    <h:outputText value="${ap.persona.NOMPER}"/>                    
+                </p:column>
+                <p:column headerText="ApellidoPersona">
+                    <h:outputText value="${ap.persona.APEPER}"/>                    
+                </p:column>
+                <p:column headerText="NombreComida">
+                    <h:outputText value="${ap.persona.NOMPER}"/>                    
+                </p:column>
+                <p:column headerText="TipoPersona">
+                    <h:outputText value="${ap.persona.TIPPER}">
+                        <f:converter converterId="tipopersona"/>
+                    </h:outputText>                    
+                </p:column>
+                <p:column headerText="ACCIONES">
+                    <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdAsignacionP').show();" actionListener="${AsignacionPC.llenardatos(ap)}" 
+                                     update=":dlgAsignacionP :frmAsignacionP :mensaje"/>
+                    <p:commandButton icon="ui-icon-circle-close" actionListener="${AsignacionPC.eliminar(ap)}" update=":frmAsignacionP :mensaje :dlgAsignacion" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
