@@ -12,6 +12,7 @@ public class AsignacionP {
     private int IDPER;
     private int IDASICOM;
     private Persona persona = new Persona();
+    private Asignacion asignacion = new Asignacion();
 
     public int getIDASIPER() {
         return IDASIPER;
@@ -45,9 +46,18 @@ public class AsignacionP {
         this.persona = persona;
     }
 
+    public Asignacion getAsignacion() {
+        return asignacion;
+    }
+
+    public void setAsignacion(Asignacion asignacion) {
+        this.asignacion = asignacion;
+    }
+
     @Override
     public String toString() {
-        return "AsignacionP{" + "IDASIPER=" + IDASIPER + ", IDPER=" + IDPER + ", IDASICOM=" + IDASICOM + ", persona=" + persona + '}';
+        return "AsignacionP{" + "IDASIPER=" + IDASIPER + ", IDPER=" + IDPER + ", IDASICOM=" + IDASICOM + ", persona=" + persona + ", asignacion=" + asignacion + '}';
     }
+
     
 }
