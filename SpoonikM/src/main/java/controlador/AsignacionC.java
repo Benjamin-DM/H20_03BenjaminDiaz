@@ -90,7 +90,7 @@ public class AsignacionC implements Serializable {
         }
     }
 
-    private void listar() {
+    public void listar() {
         try {
             listarA = dao.listar();
         } catch (Exception e) {
@@ -103,9 +103,6 @@ public class AsignacionC implements Serializable {
         this.modelo = new Asignacion();
         this.newDate = new Date();
     }
-
-
-    
 
     public Asignacion getModelo() {
         return modelo;
@@ -146,5 +143,4 @@ public class AsignacionC implements Serializable {
     public void setDateformat(SimpleDateFormat dateformat) {
         this.dateformat = dateformat;
     }
-
 }

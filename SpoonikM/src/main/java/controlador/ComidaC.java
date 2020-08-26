@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import modelo.Comida;
 
@@ -45,13 +47,21 @@ public class ComidaC implements Serializable {
         }
     }
 
-    public void registrar() {
+    public void registrar()  {
         try {
-            dao.registrar(modelo);
-            System.out.println("Comida: " + modelo.toString());
-            listar();
+            if (dao.existe(modelo, listarC) == false) {
+                dao.registrar(modelo);
+                System.out.println("Comida: " + modelo.toString());
+                listar();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                                "La comida que intentaste registrar, ya existe.",
+                                null));
+
+            }
         } catch (Exception e) {
-            System.out.println("Error al registrar ComidaC: " + e.getMessage());
+            System.out.println("Error al registar ComidaC:" + e.getMessage());
         }
     }
 

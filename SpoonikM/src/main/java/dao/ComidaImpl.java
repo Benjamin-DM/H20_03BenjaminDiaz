@@ -93,7 +93,14 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
         return listaComida;
     }
 
-
+ public boolean existe(Comida modelo, List<Comida> listaModelo) {
+        for (Comida com : listaModelo) {
+            if (modelo.equals(com)) {
+                return true;
+            }
+        }
+        return false;
+    }
     @Override
     public List<Comida> listar(Comida modelo) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -103,5 +110,7 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
     public Comida obtenerModelo(Comida modelo) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+
     
 }

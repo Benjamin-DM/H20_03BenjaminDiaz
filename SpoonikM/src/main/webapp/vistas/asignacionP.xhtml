@@ -11,14 +11,14 @@
     <h:body>
         <h1>Seleccion de Comidas</h1>
         <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
-         <p:menubar>
-                <p:menuitem value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
-                <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
-                <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
-                <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
-                <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
-                <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
-            </p:menubar>
+        <p:menubar>
+            <p:menuitem value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
+            <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
+            <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
+            <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
+            <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
+            <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
+        </p:menubar>
         <h:form>
             <p:panelGrid columns="2">
                 <p:commandButton value="Agregar Persona" oncomplete="PF('wdAsignacionP').show(); "/>
@@ -29,15 +29,15 @@
             <p:ajax event="close" listener="${AsignacionPC.limpiar()}" update="dlgAsignacionP"/>
             <h:form id="dlgAsignacionP">
                 <h:panelGrid columns="2">
-                    <p:outputLabel value = "Seleccione la Persona" for="Persona"/>
+                    <p:outputLabel value = "Seleccione la persona" for="Comida"/>
                     <p:selectOneMenu id="Persona" value="${AsignacionPC.modelo.IDPER}" required="true">
-                        <f:selectItem itemLabel="Seleccione la Persona " itemValue="" />
-                        <f:selectItems value="${personaC.listar()}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}"/>
+                        <f:selectItem itemLabel="Seleccione la persona " itemValue=" " />
+                        <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}"/>
                     </p:selectOneMenu>
                     <p:outputLabel value = "Seleccione la comida" for="Comida"/>
-                    <p:selectOneMenu id="Comida" value="${AsignacionC.modelo.IDCOM}" required="true">
-                        <f:selectItem itemLabel="Seleccione la Comida " itemValue="" />
-                        <f:selectItems value="${comidaC.listar()}" var="asc" itemLabel="${asc.NOMCOM}" itemValue="${asc.IDCOM}"/>
+                    <p:selectOneMenu id="Comida" value="${AsignacionPC.modelo.IDASICOM}" required="true">
+                        <f:selectItem itemLabel="Seleccione la Comida " itemValue=" " />
+                        <f:selectItems value="${AsignacionC.listarA}" var="asc" itemLabel="${asc.comida.NOMCOM}" itemValue="${asc.IDCOM}"/>
                     </p:selectOneMenu>
                     <p:commandButton icon="pi pi-save" value="agregar" oncomplete="PF('wdAsignacionP').hide();" actionListener="${AsignacionPC.registrar()}" 
                                      update="dlgAsignacionP :frmAsignacionP :mensaje" rendered="${AsignacionPC.modelo.IDASIPER == 0}"/>

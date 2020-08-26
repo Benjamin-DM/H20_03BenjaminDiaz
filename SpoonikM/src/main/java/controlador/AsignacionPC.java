@@ -85,7 +85,6 @@ public class AsignacionPC implements Serializable {
         this.modelo = new AsignacionP();
     }
 
-
     public AsignacionP getModelo() {
         return modelo;
     }
@@ -109,5 +108,8 @@ public class AsignacionPC implements Serializable {
     public void setListarAP(List<AsignacionP> listarAP) {
         this.listarAP = listarAP;
     }
+
+
+
 }
 
