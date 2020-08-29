@@ -39,7 +39,11 @@
                     <p:outputLabel value = "Apellido" for="txtApellido"/>
                     <p:inputText value ="${personaC.modelo.APEPER}" required="true" id="txtApellido">
                         <f:validateLength minimum="2" maximum="20"/>
-
+                        <p:keyFilter regEx="/[ABCDEFGHIJKLMNÑOPQRSTUVWXYZ]/i"/> 
+                    </p:inputText>
+                    <p:outputLabel value = "Apellido Materno" for="txtApellido"/>
+                    <p:inputText value ="${personaC.modelo.APEMATPER}" required="true" id="txtApellidoM">
+                        <f:validateLength minimum="2" maximum="20"/>
                         <p:keyFilter regEx="/[ABCDEFGHIJKLMNÑOPQRSTUVWXYZ]/i"/> 
                     </p:inputText>
 
@@ -80,7 +84,7 @@
                     <h:outputText value="${p.NOMPER}"/>
                 </p:column>
                 <p:column headerText="APELLIDO">
-                    <h:outputText value="${p.APEPER}"/>
+                    <h:outputText value="${p.APEPER} ${p.APEMATPER}"/>
                 </p:column>
                 <p:column headerText="DNI">
                     <h:outputText value="${p.DNIPER}"/>

@@ -1,6 +1,7 @@
 package controlador;
 
 import dao.AsignacionPImpl;
+import dao.PersonaImpl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,22 +9,24 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import modelo.AsignacionP;
-
+import modelo.Persona;
 
 @Named(value = "AsignacionPC")
 @SessionScoped
 public class AsignacionPC implements Serializable {
 
-    
     private AsignacionP modelo;
     private AsignacionPImpl dao;
     private List<AsignacionP> listarAP;
+    private PersonaImpl daop;
+    private List<Persona> listarregistro;
 
     public AsignacionPC() {
         modelo = new AsignacionP();
         dao = new AsignacionPImpl();
         listarAP = new ArrayList<>();
     }
+
     @PostConstruct
     public void init() {
         try {
@@ -38,26 +41,32 @@ public class AsignacionPC implements Serializable {
         this.modelo.setIDASICOM(asip.getIDASIPER());
         this.modelo.setIDPER(asip.getPersona().getIDPER());
         try {
-            System.out.println("esto es asignacion_comida de tabla: " + asip);         
+            System.out.println("esto es asignacion_comida de tabla: " + asip);
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
         }
     }
 
     public void registrar() {
-        try {            
+        try {
+
             dao.registrar(modelo);
             System.out.println("Asignacion: " + modelo.toString());
+//            for (Persona per : listarregistro) {
+//                modelo.setIDPER(per.getIDPER());
+//                dao.registrar(modelo);
+//            }
             listar();
         } catch (Exception e) {
-            System.out.println("Error al registrar AsignacionC: " + e.getMessage());
+            System.out.println("Error al registrar AsignacionPC: " + e.getMessage());
         }
     }
+
     public void editar() {
         try {
             dao.editar(modelo);
             listar();
-            } catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Error al editar AsignacionPC" + e.getMessage());
 
         }
@@ -76,6 +85,7 @@ public class AsignacionPC implements Serializable {
     private void listar() {
         try {
             listarAP = dao.listar();
+            listarregistro = daop.listar();
         } catch (Exception e) {
             System.out.println("Error al listar AsignacionPC" + e.getMessage());
         }
@@ -109,7 +119,20 @@ public class AsignacionPC implements Serializable {
         this.listarAP = listarAP;
     }
 
+    public PersonaImpl getDaop() {
+        return daop;
+    }
 
+    public void setDaop(PersonaImpl daop) {
+        this.daop = daop;
+    }
+
+    public List<Persona> getListarregistro() {
+        return listarregistro;
+    }
+
+    public void setListarregistro(List<Persona> listarregistro) {
+        this.listarregistro = listarregistro;
+    }
 
 }
-

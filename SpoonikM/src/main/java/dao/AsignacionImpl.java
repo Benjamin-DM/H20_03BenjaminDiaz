@@ -124,6 +124,13 @@ public class AsignacionImpl extends Conexion implements ICrud<Asignacion> {
         }
         return listaAsignacion;
     }
+    public boolean existe(Asignacion modelo, List<Asignacion> listaModelo) {
+        for (Asignacion asi : listaModelo) {
+            if (modelo.equals(asi)) {
+                return true;
+            }
+        }
+        return false;}
 
     @Override
     public List<Asignacion> listar(Asignacion modelo) throws Exception {

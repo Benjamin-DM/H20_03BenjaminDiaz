@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import modelo.Asignacion;
 import modelo.AsignacionP;
+import modelo.Comida;
 import modelo.Persona;
 
 public class AsignacionPImpl extends Conexion implements ICrud<AsignacionP> {
@@ -13,9 +14,10 @@ public class AsignacionPImpl extends Conexion implements ICrud<AsignacionP> {
     @Override
     public void registrar(AsignacionP modelo) throws Exception {
         try {
-            String sql = "INSERT INTO ASIGNACION_PERSONA (IDPER) VALUES (?)";
+            String sql = "INSERT INTO ASIGNACION_PERSONA (IDPER,IDASICOM) VALUES (?,?)";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setInt(1, modelo.getIDPER());
+            ps.setInt(2, modelo.getIDASICOM());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -29,10 +31,11 @@ public class AsignacionPImpl extends Conexion implements ICrud<AsignacionP> {
     @Override
     public void editar(AsignacionP modelo) throws Exception {
         try {
-            String sql = "UPDATE ASIGNACION_COMIDA SET IDPER=? WHERE IDASIPER=?";
+            String sql = "UPDATE ASIGNACION_COMIDA SET IDPER=? IDASICOM=? WHERE IDASIPER=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setInt(1, modelo.getIDPER());
-            ps.setInt(2, modelo.getIDASIPER());
+            ps.setInt(2, modelo.getIDASICOM());
+            ps.setInt(3, modelo.getIDASIPER());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -70,11 +73,12 @@ public class AsignacionPImpl extends Conexion implements ICrud<AsignacionP> {
                     + "PERSONA.IDPER,\n"
                     + "PERSONA.NOMPER,\n"
                     + "PERSONA.APEPER,\n"
-                    + "PERSONA.TIPPER,\n"
+                    + "PERSONA.TIPPER\n"
                     + "from ASIGNACION_PERSONA\n"
                     + "inner join PERSONA on\n"
                     + "PERSONA.IDPER = ASIGNACION_PERSONA.IDPER";
             String sql = "select \n"
+                    + "ASIGNACION_COMIDA.IDASICOM,\n"
                     + "COMIDA.NOMCOM,\n"
                     + "COMIDA.IDCOM,\n"
                     + "COMIDA.TIPCOM,\n"
@@ -92,13 +96,17 @@ public class AsignacionPImpl extends Conexion implements ICrud<AsignacionP> {
                 while (rs1.next() & rs.next()) {
                     AsignacionP ap = new AsignacionP();
                     Persona p = new Persona();
+                    Comida c = new Comida();
                     Asignacion a= new Asignacion();
                     p.setNOMPER(rs1.getString("NOMPER"));
                     p.setAPEPER(rs1.getString("APEPER"));
                     p.setTIPPER(rs1.getString("TIPPER"));
                     p.setIDPER(rs1.getInt("IDPER"));
+                    ap.setIDASIPER(rs1.getInt("IDASIPER"));
+                    c.setNOMCOM(rs.getString("NOMCOM"));
+                    c.setTIPCOM(rs.getString("TIPCOM"));
                     a.setIDASICOM(rs.getInt("IDASICOM"));
-                    ap.setIDASIPER(rs.getInt("IDASIPER"));
+                    a.setComida(c);
                     ap.setPersona(p);
                     ap.setAsignacion(a);
                     listaAsignacionP.add(ap);
@@ -109,10 +117,10 @@ public class AsignacionPImpl extends Conexion implements ICrud<AsignacionP> {
                 ps.close();
             }
         catch (Exception e) {
-                System.out.println("Error aca :v " + e.getMessage());
+                System.out.println("Error aca en la wea de persona " + e.getMessage());
           }
         } catch(Exception e){
-                System.out.println("Error en Asignacion Persona lista");
+                
             }
             finally {
                 this.desconectar();

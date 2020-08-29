@@ -43,13 +43,13 @@
                     <p:selectOneRadio value ="${productoC.modelo.TIPPRO}" required="true" id="rbtTipo">
                         <p:ajax event="valueChange" listener="${productoC.cambiar()}" update="txtCostoPro dlgdatos" />
                         <f:selectItem itemValue="E" itemLabel="Envasados"/>
-                        <f:selectItem itemValue="P" itemLabel="Postres"/>
+                        <f:selectItem itemValue="P" itemLabel="Artesanales"/>
                     </p:selectOneRadio> 
                     <p:outputLabel value = "Costo" for="txtCostoPro"/>
                     <p:inputText value ="${productoC.modelo.COSPRO}" required="true" id="txtCostoPro">
                         <p:ajax event="keyup" listener="${productoC.suma()}" update="Preven"/>
                         <f:validateLength maximum="5"/>
-                        <p:keyFilter regEx="/[1234567890]/i"/> 
+                        <p:keyFilter regEx="/[1234567890.]/i"/> 
                     </p:inputText>
                     <p:outputLabel value = "Precio Venta" />
                     <p:outputLabel value="${productoC.uno}" id="Preven"/>

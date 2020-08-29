@@ -27,7 +27,7 @@ public class Tipoproducto implements Converter {
             tipo = (String) value;
             switch (tipo) {
                 case ("P"):
-                    tipo = "Postres";
+                    tipo = "Artesanales";
                     break;
                 case ("E"):
                     tipo = "Envasados";

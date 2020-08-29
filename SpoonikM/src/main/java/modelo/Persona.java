@@ -5,13 +5,28 @@ public class Persona {
     private int IDPER;
     private String NOMPER;
     private String APEPER;
+    private String APEMATPER;
     private Integer DNIPER;
     private String TIPPER;
     private String SEXPER;
     private Integer TELPER;
     private String ESTPER;
 
-   
+    public String getAPEMATPER() {
+        return APEMATPER;
+    }
+
+    public void setAPEMATPER(String APEMATPER) {
+        this.APEMATPER = APEMATPER;
+    }
+
+    public int getIDPER() {
+        return IDPER;
+    }
+
+    public void setIDPER(int IDPER) {
+        this.IDPER = IDPER;
+    }
 
     public String getNOMPER() {
         return NOMPER;
@@ -69,22 +84,12 @@ public class Persona {
         this.ESTPER = ESTPER;
     }
 
-       public int getIDPER() {
-        return IDPER;
-    }
-
-    public void setIDPER(int IDPER) {
-        this.IDPER = IDPER;
-    }
-
     @Override
     public String toString() {
-        return "Persona{" + "IDPER=" + IDPER + ", NOMPER=" + NOMPER + ", APEPER=" + APEPER + ", DNIPER=" + DNIPER + ", TIPPER=" + TIPPER + ", SEXPER=" + SEXPER + ", TELPER=" + TELPER + ", ESTPER=" + ESTPER + '}';
+        return "Persona{" + "IDPER=" + IDPER + ", NOMPER=" + NOMPER + ", APEPER=" + APEPER + ", APEMATPER=" + APEMATPER + ", DNIPER=" + DNIPER + ", TIPPER=" + TIPPER + ", SEXPER=" + SEXPER + ", TELPER=" + TELPER + ", ESTPER=" + ESTPER + '}';
     }
-    
-          
-     
-    
+
+  
     
 
   

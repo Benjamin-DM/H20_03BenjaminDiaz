@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import modelo.Asignacion;
 
@@ -22,6 +24,7 @@ public class AsignacionC implements Serializable {
     private List<Asignacion> listarA;
     private Date newDate;
     private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
+
 
     public AsignacionC() {
         modelo = new Asignacion();
@@ -52,13 +55,20 @@ public class AsignacionC implements Serializable {
         }
     }
 
-    public void registrar() {
-        try {
-            System.out.println("Esto es newDate "+ newDate );
-            modelo.setFECASICOM(dateformat.format(newDate));            
-            dao.registrar(modelo);
-            System.out.println("Asignacion: " + modelo.toString());
-            listar();
+    public void registrar() {        
+         try {   
+            System.out.println("Esto es newDate "+ newDate ); 
+            modelo.setFECASICOM(dateformat.format(newDate));  
+            if (dao.existe(modelo, listarA) == false) {              
+                dao.registrar(modelo);
+                System.out.println("Asignacion " + modelo.toString());
+                listar();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                                "La comida que intentaste registrar en asignacion, ya existe.",
+                                null));
+            }               
         } catch (Exception e) {
             System.out.println("Error al registrar AsignacionC: " + e.getMessage());
         }
@@ -143,4 +153,6 @@ public class AsignacionC implements Serializable {
     public void setDateformat(SimpleDateFormat dateformat) {
         this.dateformat = dateformat;
     }
+
+
 }

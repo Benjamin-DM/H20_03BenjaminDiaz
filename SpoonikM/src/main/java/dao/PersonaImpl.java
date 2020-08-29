@@ -13,15 +13,16 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
     @Override
     public void registrar(Persona modelo) throws Exception {
         try {
-            String sql = "INSERT INTO PERSONA (NOMPER,APEPER,DNIPER,SEXPER,TELPER,TIPPER,ESTPER) VALUES (?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO PERSONA (NOMPER,APEPER,APEMATPER,DNIPER,SEXPER,TELPER,TIPPER,ESTPER) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, modelo.getNOMPER());
             ps.setString(2, modelo.getAPEPER());
-            ps.setInt(3, modelo.getDNIPER());
-            ps.setString(4, modelo.getSEXPER());
-            ps.setInt(5, modelo.getTELPER());
-            ps.setString(6, modelo.getTIPPER());
-            ps.setString(7, "A");
+            ps.setString(3, modelo.getAPEMATPER());
+            ps.setInt(4, modelo.getDNIPER());
+            ps.setString(5, modelo.getSEXPER());
+            ps.setInt(6, modelo.getTELPER());
+            ps.setString(7, modelo.getTIPPER());
+            ps.setString(8, "A");
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -35,16 +36,17 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
     @Override
     public void editar(Persona modelo) throws Exception {
         try {
-            String sql = "UPDATE PERSONA SET NOMPER=?, APEPER=?, DNIPER=?, ESTPER=?, TIPERO=?, TELPER=?, SEXPER=? WHERE IDPER=?";
+            String sql = "UPDATE PERSONA SET NOMPER=?, APEPER=?, APEMATPER=?, DNIPER=?, ESTPER=?, TIPERO=?, TELPER=?, SEXPER=? WHERE IDPER=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, modelo.getNOMPER());
             ps.setString(2, modelo.getAPEPER());
-            ps.setInt(3, modelo.getDNIPER());
-            ps.setString(4, modelo.getESTPER());
-            ps.setString(5, modelo.getTIPPER());
-            ps.setInt(6, modelo.getTELPER());
-            ps.setString(7, modelo.getSEXPER());
-            ps.setInt(8, modelo.getIDPER());
+            ps.setString(3, modelo.getAPEPER());
+            ps.setInt(4, modelo.getDNIPER());
+            ps.setString(5, modelo.getESTPER());
+            ps.setString(6, modelo.getTIPPER());
+            ps.setInt(7, modelo.getTELPER());
+            ps.setString(8, modelo.getSEXPER());
+            ps.setInt(9, modelo.getIDPER());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -84,6 +86,7 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
                 p.setIDPER(rs.getInt("IDPER"));
                 p.setNOMPER(rs.getString("NOMPER"));
                 p.setAPEPER(rs.getString("APEPER"));
+                p.setAPEMATPER(rs.getString("APEMATPER"));
                 p.setTIPPER(rs.getString("TIPPER"));
                 p.setDNIPER(rs.getInt("DNIPER"));
                 p.setTELPER(rs.getInt("TELPER"));

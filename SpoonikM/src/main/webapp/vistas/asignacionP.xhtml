@@ -28,22 +28,31 @@
         <p:dialog widgetVar="wdAsignacionP" modal="true" showEffect="Clip" header="Nuevo Registro" resizable="false">
             <p:ajax event="close" listener="${AsignacionPC.limpiar()}" update="dlgAsignacionP"/>
             <h:form id="dlgAsignacionP">
-                <h:panelGrid columns="2">
-                    <p:outputLabel value = "Seleccione la persona" for="Comida"/>
+                <h:panelGrid columns="1">
+                    <p:outputLabel value = "Seleccione la persona " for="Comida"/>
                     <p:selectOneMenu id="Persona" value="${AsignacionPC.modelo.IDPER}" required="true">
                         <f:selectItem itemLabel="Seleccione la persona " itemValue=" " />
                         <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}"/>
                     </p:selectOneMenu>
-                    <p:outputLabel value = "Seleccione la comida" for="Comida"/>
+                  <!-- <p:outputLabel value = "Seleccione la persona" for="minilista"/>
+                   <p:selectManyMenu id="minilista" value="${AsignacionPC.listarregistro}" converter="${themeConverter}"
+                                     var="t" filter="true" filterMatchMode="contains" showCheckbox="true">
+                       <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}" />
+                       <p:column>
+                           <h:outputText value="${per.NOMPER} ${per.APEPER}" />
+                       </p:column>
+                   </p:selectManyMenu>-->
+                    
+                    <p:outputLabel value = "Seleccione la comida " for="Comida"/>
                     <p:selectOneMenu id="Comida" value="${AsignacionPC.modelo.IDASICOM}" required="true">
                         <f:selectItem itemLabel="Seleccione la Comida " itemValue=" " />
-                        <f:selectItems value="${AsignacionC.listarA}" var="asc" itemLabel="${asc.comida.NOMCOM}" itemValue="${asc.IDCOM}"/>
+                        <f:selectItems value="${AsignacionC.listarA}" var="asc" itemLabel="${asc.comida.NOMCOM}" itemValue="${asc.comida.IDCOM}"/>
                     </p:selectOneMenu>
+
                     <p:commandButton icon="pi pi-save" value="agregar" oncomplete="PF('wdAsignacionP').hide();" actionListener="${AsignacionPC.registrar()}" 
                                      update="dlgAsignacionP :frmAsignacionP :mensaje" rendered="${AsignacionPC.modelo.IDASIPER == 0}"/>
                     <p:commandButton icon="pi pi-save" value="Actualizar" oncomplete="PF('wdAsignacionP').hide();" actionListener="${AsignacionPC.editar()}" 
                                      update="dlgAsignacionP :frmAsignacionP :mensaje" rendered="${AsignacionPC.modelo.IDASIPER != 0}"/>
-
                 </h:panelGrid>
             </h:form>
         </p:dialog>
@@ -56,17 +65,17 @@
                     <h:outputText value="${ap.persona.APEPER}"/>                    
                 </p:column>
                 <p:column headerText="NombreComida">
-                    <h:outputText value="${ap.persona.NOMPER}"/>                    
+                    <h:outputText value="${ap.asignacion.comida.NOMCOM}"/>                    
                 </p:column>
-                <p:column headerText="TipoPersona">
-                    <h:outputText value="${ap.persona.TIPPER}">
+                <p:column headerText="TipoComida">
+                    <h:outputText value="${ap.asignacion.comida.TIPCOM}">
                         <f:converter converterId="tipopersona"/>
                     </h:outputText>                    
                 </p:column>
                 <p:column headerText="ACCIONES">
                     <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdAsignacionP').show();" actionListener="${AsignacionPC.llenardatos(ap)}" 
                                      update=":dlgAsignacionP :frmAsignacionP :mensaje"/>
-                    <p:commandButton icon="ui-icon-circle-close" actionListener="${AsignacionPC.eliminar(ap)}" update=":frmAsignacionP :mensaje :dlgAsignacion" />
+                    <p:commandButton icon="ui-icon-circle-close" actionListener="${AsignacionPC.eliminar(ap)}" update=":frmAsignacionP :mensaje :dlgAsignacionP" />
                 </p:column>
             </p:dataTable>
         </h:form>

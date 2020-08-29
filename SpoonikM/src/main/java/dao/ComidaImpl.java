@@ -101,6 +101,7 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
         }
         return false;
     }
+
     @Override
     public List<Comida> listar(Comida modelo) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
