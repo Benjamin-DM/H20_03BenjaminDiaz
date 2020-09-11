@@ -12,21 +12,21 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
  
     @Override
     public void registrar(Persona modelo) throws Exception {
+        System.out.println("Modelo adentro :v" + modelo.toString());
         try {
-            String sql = "INSERT INTO PERSONA (NOMPER,APEPER,APEMATPER,DNIPER,SEXPER,TELPER,TIPPER,ESTPER) VALUES (?,?,?,?,?,?,?,?)";
+            String sql = "exec pccrearPersona ?,?,?,?,?,?,?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, modelo.getNOMPER());
             ps.setString(2, modelo.getAPEPER());
             ps.setString(3, modelo.getAPEMATPER());
             ps.setInt(4, modelo.getDNIPER());
-            ps.setString(5, modelo.getSEXPER());
-            ps.setInt(6, modelo.getTELPER());
+            ps.setInt(5, modelo.getTELPER());
+            ps.setString(6, modelo.getSEXPER());            
             ps.setString(7, modelo.getTIPPER());
-            ps.setString(8, "A");
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
-            System.out.println("error registrar dao: " + e.getMessage());
+           System.out.println("error registrar dao: " + e.getMessage());
         } finally {
             this.desconectar();
         }
@@ -36,7 +36,7 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
     @Override
     public void editar(Persona modelo) throws Exception {
         try {
-            String sql = "UPDATE PERSONA SET NOMPER=?, APEPER=?, APEMATPER=?, DNIPER=?, ESTPER=?, TIPERO=?, TELPER=?, SEXPER=? WHERE IDPER=?";
+            String sql = "exec pcactuPersona NOMPER=?, APEPER=?, APEMATPER=?, DNIPER=?, ESTPER=?, TIPER=?, TELPER=?, SEXPER=? WHERE IDPER=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, modelo.getNOMPER());
             ps.setString(2, modelo.getAPEPER());
@@ -59,7 +59,7 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
     @Override
     public void eliminar(Persona modelo) throws Exception {
         try {
-            String sql = "UPDATE PERSONA SET ESTPER=? WHERE IDPER=?";
+            String sql = "exec pcelimPersona ?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setInt(1, modelo.getIDPER());
             ps.executeUpdate();
@@ -76,7 +76,7 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
     public List<Persona> listar() throws Exception {
         List<Persona> listaPersona = null;
         try {
-            String sql = "SELECT * FROM PERSONA where ESTPER = 'A'";
+            String sql = "SELECT * FROM listaPersona";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             listaPersona = new ArrayList<>();

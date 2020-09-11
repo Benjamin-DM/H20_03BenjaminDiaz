@@ -28,18 +28,6 @@
 //        persona.setDNIPER(jsonObject.get("dni").getAsInt());
 //    }
 //
-//    public void respuesta() throws IOException, InterruptedException, Exception {
-//        JsonParser jsonParser = new JsonParser();
-//        JsonObject jsonObject = (JsonObject) jsonParser.parse(services.datosAPI(persona.getDNIPER()));
-//
-//        persona.setNOMPER(jsonObject.get("nombres").getAsString());
-//        persona.setAPEPER((jsonObject.get("apellido_paterno").getAsString())+(jsonObject.get("apellido_materno").getAsString()));
-//        persona.setDNIPER(jsonObject.get("dni").getAsInt());
-//
-//        System.out.println(persona.getNOMPER() + persona.getAPEPER() + persona.getDNIPER());
-//
-//        dao.registrar(persona);
-//    }
 //
 //    public Persona getPersona() {
 //        return persona;

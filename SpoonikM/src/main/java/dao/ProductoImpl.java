@@ -14,7 +14,7 @@ public class ProductoImpl extends Conexion implements ICrud<Producto>{
     @Override
     public void registrar(Producto modelo) throws Exception {
          try {
-            String sql = "INSERT PRODUCTO (NOMPRO, COSPRO, ESTPRO,CANPRO ,TIPPRO,PREVENPRO) values (?,?,?,?,?,?)";
+            String sql = "exec pccrearProducto ?,?,?,?,?,?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, modelo.getNOMPRO());
             ps.setDouble(2, modelo.getCOSPRO());
@@ -33,7 +33,7 @@ public class ProductoImpl extends Conexion implements ICrud<Producto>{
     @Override
     public void editar(Producto modelo) throws Exception {
    try {
-            String sql = "UPDATE PRODUCTO SET NOMPRO=?, COSPRO=?, ESTPRO=?, CANPRO=?, TIPPRO=?, PREVENPRO=? WHERE IDPRO=?";
+            String sql = "exec pcactuProducto NOMPRO=?, COSPRO=?, ESTPRO=?, CANPRO=?, TIPPRO=?, PREVENPRO=? WHERE IDPRO=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, modelo.getNOMPRO());
             ps.setDouble(2, modelo.getCOSPRO());
@@ -55,7 +55,7 @@ public class ProductoImpl extends Conexion implements ICrud<Producto>{
     @Override
     public void eliminar(Producto modelo) throws Exception {
         try {
-            String sql = "UPDATE PRODUCTO SET ESTPRO=? WHERE IDPRO=?";
+            String sql = "exec pcelimProducto ESTPRO=? WHERE IDPRO=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, "I");
             ps.setInt(2, modelo.getIDPRO());
@@ -73,7 +73,7 @@ public class ProductoImpl extends Conexion implements ICrud<Producto>{
  public List<Producto> listar() throws Exception {
      List<Producto> listaproducto = null;
      try {
-         String sql = "SELECT * FROM PRODUCTO WHERE ESTPRO='A'";
+         String sql = "select * from listaProducto";
          PreparedStatement ps = this.conectar().prepareStatement(sql);
          ResultSet rs = ps.executeQuery();
          listaproducto =new ArrayList<>();

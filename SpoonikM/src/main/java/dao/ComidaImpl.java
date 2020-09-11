@@ -12,7 +12,7 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
     @Override
     public void registrar(Comida modelo) throws Exception {
        try {
-            String sql = "INSERT INTO COMIDA (NOMCOM, COSCOM, CANCOM, TIPCOM, ESTCOM) VALUES (?,?,?,?,'A')";
+            String sql = "exec pccrearComida ?,?,?,?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, modelo.getNOMCOM());
             ps.setDouble(2, modelo.getCOSCOM());
@@ -30,13 +30,14 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
     @Override
     public void editar(Comida modelo) throws Exception {
    try {
-            String sql = "UPDATE COMIDA SET NOMCOM=? ESTCOM=?, COSCOM=?, TIPCOM=? WHERE IDCOM=?";
+            String sql = "exec pcactuComida NOMPER=?, APEPER=?, APEMATPER=?, DNIPER=?, ESTPER=?, TIPPER=?, SEXPER=?, TELPER=? WHERE IDPER=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setString(1, modelo.getNOMCOM());
-            ps.setString(2, modelo.getESTCOM());
-            ps.setDouble(3, modelo.getCOSCOM());
-            ps.setString(4, modelo.getTIPCOM());
-            ps.setInt(5, modelo.getIDCOM());
+            ps.setDouble(2, modelo.getCOSCOM());
+            ps.setString(3, modelo.getESTCOM());
+            ps.setDouble(4, modelo.getCANCOM());
+            ps.setString(5, modelo.getTIPCOM());
+            ps.setInt(6, modelo.getIDCOM());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -49,10 +50,9 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
     @Override
     public void eliminar(Comida modelo) throws Exception {
         try {
-            String sql = "UPDATE COMIDA SET ESTCOM=? WHERE IDCOM=?";
+            String sql = "exec pcelimComida ?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
-            ps.setString(1, "I");
-            ps.setInt(2, modelo.getIDCOM());
+            ps.setInt(1, modelo.getIDCOM());
             ps.executeUpdate();
             ps.clearParameters();
             ps.close();
@@ -67,7 +67,7 @@ public class ComidaImpl extends Conexion implements ICrud<Comida>{
     public List<Comida> listar() throws Exception {
         List<Comida> listaComida = null;
         try {
-            String sql = "SELECT * FROM COMIDA where estcom = 'A'";
+            String sql = "SELECT * FROM listarComida";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             listaComida = new ArrayList<>();
