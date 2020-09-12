@@ -61,7 +61,7 @@
         </p:dialog>
         <h:form id="frmComida"> 
             <p:dataTable value="${comidaC.listarC}" var="c">
-                <p:column headerText="NOMBRE">
+                <p:column headerText="NOMBRE" sortBy="${c.NOMCOM}" filterBy="${c.NOMCOM}" filterMatchMode="contains">
                     <h:outputText value="${c.NOMCOM}"/>
                 </p:column>
                 <p:column headerText="COSTO">
@@ -70,7 +70,7 @@
                 <p:column headerText="CANTIDAD">
                     <h:outputText value="${c.CANCOM}"/>
                 </p:column>
-                <p:column headerText="TIPO">
+                <p:column headerText="TIPO" sortBy="${c.TIPCOM}" filterBy="${c.TIPCOM}" filterMatchMode="contains">
                     <h:outputText value="${c.TIPCOM}">
                         <f:converter converterId="tipoproducto"/>
                     </h:outputText> 

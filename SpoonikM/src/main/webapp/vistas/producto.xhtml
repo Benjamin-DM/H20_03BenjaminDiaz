@@ -70,8 +70,8 @@
         <!-- aca termina-->
         <h:form id="frmproducto"> 
             <p:dataTable value="${productoC.listarPr}" var="p">
-                <p:column headerText="NOMBRE">
-                    <h:outputText value="${p.NOMPRO}"/>
+                <p:column headerText="NOMBRE" sortBy="${p.NOMPRO}" filterBy="${p.NOMPRO}" filterMatchMode="contains">
+                    <h:outputText value="${p.NOMPRO}" />
                 </p:column>
                 <p:column headerText="COSTO">
                     <h:outputText value="S/.${p.COSPRO}">
@@ -84,7 +84,7 @@
                 <p:column headerText="CANTIDAD">
                     <h:outputText value="${p.CANPRO} unidades"/>
                 </p:column>
-                <p:column headerText="TIPO">
+                <p:column headerText="TIPO" sortBy="${p.TIPPRO}" filterBy="${p.TIPPRO}" filterMatchMode="contains">
                     <h:outputText value="${p.TIPPRO}">
                         <f:converter converterId="tipoproducto"/>
                     </h:outputText>

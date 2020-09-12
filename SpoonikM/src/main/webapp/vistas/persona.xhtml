@@ -88,7 +88,7 @@
                 <p:column headerText="DNI">
                     <h:outputText value="${p.DNIPER}"/>
                 </p:column>
-                <p:column headerText="TIPO">
+                <p:column headerText="TIPO" sortBy="${p.TIPPER}" filterBy="${p.TIPPER}" filterMatchMode="contains">
                     <h:outputText value="${p.TIPPER}">
                         <f:converter converterId="tipopersona"/>
                     </h:outputText>
@@ -96,8 +96,8 @@
                 <p:column headerText="CELULAR">
                     <h:outputText value="${p.TELPER}"/>
                 </p:column>
-                <p:column headerText="SEXO">
-                    <h:outputText value="${p.SEXPER}">
+                <p:column headerText="SEXO" sortBy="${p.SEXPER}" filterBy="${p.SEXPER}" filterMatchMode="contains">
+                    <h:outputText value="${p.SEXPER}" >
                         <f:converter converterId="sexoConverter"/>
                     </h:outputText>
                 </p:column>
