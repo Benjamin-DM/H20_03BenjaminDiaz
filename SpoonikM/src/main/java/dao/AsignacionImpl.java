@@ -1,11 +1,13 @@
 package dao;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import modelo.Asignacion;
 import modelo.Comida;
+import service.UtilToSql;
 
 public class AsignacionImpl extends Conexion implements ICrud<Asignacion> {
 
@@ -15,7 +17,8 @@ public class AsignacionImpl extends Conexion implements ICrud<Asignacion> {
             String sql = "INSERT INTO ASIGNACION_COMIDA (IDCOM,FECASICOM) VALUES (?,?)";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setInt(1, modelo.getIDCOM());
-            ps.setString(2, modelo.getFECASICOM());
+            ps.setDate(2,UtilToSql.convert(modelo.getFECASICOM()));
+//            ps.setDate(2,modelo.getFECASICOM());
             ps.executeUpdate();
             ps.close();
         } catch (Exception e) {
@@ -32,7 +35,8 @@ public class AsignacionImpl extends Conexion implements ICrud<Asignacion> {
             String sql = "UPDATE ASIGNACION_COMIDA SET IDCOM=?, FECASICOM=? WHERE IDASICOM=?";
             PreparedStatement ps = this.conectar().prepareStatement(sql);
             ps.setInt(1, modelo.getIDCOM());
-            ps.setString(2, modelo.getFECASICOM());
+            ps.setDate(6, new java.sql.Date(modelo.getFECASICOM().getTime()));
+//            ps.setDate(2, modelo.getFECASICOM());
             ps.setInt(3, modelo.getIDASICOM());
             ps.executeUpdate();
             ps.close();
@@ -86,7 +90,7 @@ public class AsignacionImpl extends Conexion implements ICrud<Asignacion> {
                     c.setTIPCOM(rs1.getString("TIPCOM"));
                     c.setIDCOM(rs1.getInt("IDCOM"));
                     a.setIDASICOM(rs1.getInt("IDASICOM"));
-                    a.setFECASICOM(rs1.getString("FECASICOM"));
+                    a.setFECASICOM(rs1.getDate("FECASICOM"));
                     a.setComida(c);
                     listaAsignacion.add(a);
                 }

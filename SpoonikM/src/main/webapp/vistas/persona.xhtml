@@ -9,6 +9,9 @@
         <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
     </h:head>
     <h:body>
+        <style>
+            body {background-color: darkgreen;}
+        </style>
         <h1>Persona</h1>
         <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
         <p:menubar>
@@ -18,6 +21,7 @@
                 <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
                 <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
                 <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
+                <p:menuitem value="venta" url="/SpoonikM/faces/vistas/venta.xhtml"/>
             </p:menubar>
         <h:form>
             <p:panelGrid columns="2">
@@ -33,23 +37,23 @@
                     <p:inputText value = "${personaC.modelo.NOMPER}" required="true" id="txtNombre" > 
                         <f:validateLength minimum="2" maximum="20" />
 
-                        <p:keyFilter regEx="/[ABCDEFGHIJKLMNÑOPQRSTUVWXYZ]/i"/> 
+                        <p:keyFilter regEx="/[A-Z]/i"/> 
                     </p:inputText>
 
                     <p:outputLabel value = "Apellido" for="txtApellido"/>
                     <p:inputText value ="${personaC.modelo.APEPER}" required="true" id="txtApellido">
                         <f:validateLength minimum="2" maximum="20"/>
-                        <p:keyFilter regEx="/[ABCDEFGHIJKLMNÑOPQRSTUVWXYZ]/i"/> 
+                        <p:keyFilter regEx="/[A-Z]/i"/> 
                     </p:inputText>
                     <p:outputLabel value = "Apellido Materno" for="txtApellido"/>
                     <p:inputText value ="${personaC.modelo.APEMATPER}" required="true" id="txtApellidoM">
                         <f:validateLength minimum="2" maximum="20"/>
-                        <p:keyFilter regEx="/[ABCDEFGHIJKLMNÑOPQRSTUVWXYZ]/i"/> 
+                        <p:keyFilter regEx="/[A-Z]/i"/> 
                     </p:inputText>
 
                     <p:outputLabel value = "Dni" for="txtDni"/>
                     <p:inputText value ="${personaC.modelo.DNIPER}" required="true" id="txtDni" maxlength="8">
-                        <p:keyFilter regEx="/[123456789]/i"/> 
+                        <p:keyFilter regEx="/[1-9]/i"/> 
                     </p:inputText>
 
                     <p:outputLabel value = "Tipo" for="rbTipo"/>
@@ -61,7 +65,7 @@
 
                     <p:outputLabel value = "Telefono" for="txtTelefono"/>
                     <p:inputText value ="${personaC.modelo.TELPER}" required="true" id="txtTelefono" maxlength="9">
-                        <p:keyFilter regEx="/[123456789]/i"/> 
+                        <p:keyFilter regEx="/[1-9]/i"/> 
                     </p:inputText>
                     <p:outputLabel value = "Sexo" for="rbSexo"/>
                     <p:selectOneRadio value ="${personaC.modelo.SEXPER}" required="true" id="rbSexo">

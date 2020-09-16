@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import modelo.AsignacionP;
 import modelo.Persona;
+import org.primefaces.event.UnselectEvent;
 
 @Named(value = "AsignacionPC")
 @SessionScoped
@@ -20,6 +23,7 @@ public class AsignacionPC implements Serializable {
     private List<AsignacionP> listarAP;
     private PersonaImpl daop;
     private List<Persona> listarregistro;
+    private List<Persona> personlist;
 
     public AsignacionPC() {
         modelo = new AsignacionP();
@@ -49,8 +53,12 @@ public class AsignacionPC implements Serializable {
 
     public void registrar() {
         try {
-
-            dao.registrar(modelo);
+            for (Persona p : personlist){
+                   modelo.getIDPER(p.getIDPER()); 
+                   dao.registrar(modelo);
+                   System.out.println("acá hay " + p);
+            }
+            
             System.out.println("Asignacion: " + modelo.toString());
 //            for (Persona per : listarregistro) {
 //                modelo.setIDPER(per.getIDPER());
@@ -135,4 +143,21 @@ public class AsignacionPC implements Serializable {
         this.listarregistro = listarregistro;
     }
 
+    public void onItemUnselect(UnselectEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        FacesMessage msg = new FacesMessage();
+        msg.setSummary("Item unselected: " + event.getObject().toString());
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);
+
+        context.addMessage(null, msg);
+    }
+
+    public List<Persona> getPersonlist() {
+        return personlist;
+    }
+
+    public void setPersonlist(List<Persona> personlist) {
+        this.personlist = personlist;
+    }
 }

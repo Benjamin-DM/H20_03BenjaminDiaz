@@ -2,10 +2,9 @@ package controlador;
 
 import dao.AsignacionImpl;
 import java.io.Serializable;
+import java.security.Provider.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -13,6 +12,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import modelo.Asignacion;
+import org.primefaces.event.UnselectEvent;
 
 @Named(value = "AsignacionC")
 @SessionScoped
@@ -22,9 +22,7 @@ public class AsignacionC implements Serializable {
     private Asignacion modelo;
     private AsignacionImpl dao;
     private List<Asignacion> listarA;
-    private Date newDate;
-    private SimpleDateFormat dateformat = new SimpleDateFormat("yyyy/MM/dd");
-
+    
 
     public AsignacionC() {
         modelo = new Asignacion();
@@ -46,9 +44,7 @@ public class AsignacionC implements Serializable {
         this.modelo.setIDASICOM(asi.getIDASICOM());
         this.modelo.setIDCOM(asi.getComida().getIDCOM());
         this.modelo.setFECASICOM(asi.getFECASICOM());
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-d");
         try {
-            this.newDate = formato.parse(modelo.getFECASICOM());
             System.out.println("esto es asignacion_comida de tabla: " + asi);         
         } catch (Exception e) {
             System.out.println("Error" + e.getMessage());
@@ -56,9 +52,7 @@ public class AsignacionC implements Serializable {
     }
 
     public void registrar() {        
-         try {   
-            System.out.println("Esto es newDate "+ newDate ); 
-            modelo.setFECASICOM(dateformat.format(newDate));  
+         try { 
             if (dao.existe(modelo, listarA) == false) {              
                 dao.registrar(modelo);
                 System.out.println("Asignacion " + modelo.toString());
@@ -81,7 +75,6 @@ public class AsignacionC implements Serializable {
 //                    this.newDate = formato.parse(modelo.getFECHASICOM());
     public void editar() {
         try {
-            modelo.setFECASICOM(dateformat.format(newDate));
             dao.editar(modelo);
             listar();
             } catch (Exception e) {
@@ -105,13 +98,12 @@ public class AsignacionC implements Serializable {
             listarA = dao.listar();
         } catch (Exception e) {
             System.out.println("Error al listar AsignacionC" + e.getMessage());
-            System.out.println("tas mandando fecha " + newDate);
+            
         }
     }
 
     public void limpiar() {
         this.modelo = new Asignacion();
-        this.newDate = new Date();
     }
 
     public Asignacion getModelo() {
@@ -136,22 +128,6 @@ public class AsignacionC implements Serializable {
 
     public void setListarA(List<Asignacion> listarA) {
         this.listarA = listarA;
-    }
-
-    public Date getNewDate() {
-        return newDate;
-    }
-
-    public void setNewDate(Date newDate) {
-        this.newDate = newDate;
-    }
-
-    public SimpleDateFormat getDateformat() {
-        return dateformat;
-    }
-
-    public void setDateformat(SimpleDateFormat dateformat) {
-        this.dateformat = dateformat;
     }
 
 

@@ -9,15 +9,20 @@
         <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
     </h:head>
     <h:body>
+        <style>
+            body {background-color: darkgreen;}
+        </style>
         <h1>Venta </h1>
         <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
-            <p:menubar>
-                <p:menuitem value="Inicio" url="/Spoonik/faces/index.xhtml"/>
-                <p:menuitem value="Persona" url="/Spoonik/faces/vistas/persona.xhtml"/>
-                <p:menuitem value="Comida" url="/Spoonik/faces/vistas/comida.xhtml"/>
-                <p:menuitem value="Asignación" url="/Spoonik/faces/vistas/asignacion.xhtml"/>
-                <p:menuitem value="Seleccion de Platos" url="/Spoonik/faces/vistas/asignacionP.xhtml"/>
-            </p:menubar>
+        <p:menubar>
+            <p:menuitem value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
+            <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
+            <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
+            <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
+            <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
+            <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
+            <p:menuitem value="venta" url="/SpoonikM/faces/vistas/venta.xhtml"/>
+        </p:menubar>
         <h:form>
             <p:panelGrid columns="2">
                 <p:commandButton value="Add Venta" oncomplete="PF('wdVenta').show(); "/>
@@ -27,7 +32,7 @@
             <p:ajax event="close" listener="${VentaC.limpiar()}" update=":dlgVenta"/>
             <h:form id="dlgVenta">
                 <h:panelGrid columns="2">
-                     <p:outputLabel value = "Seleccione el nombre" for="Nombre"/>
+                    <p:outputLabel value = "Seleccione el nombre" for="Nombre"/>
                     <p:selectOneMenu id="Nombre" value="${VentaC.modelo.IDPER}" required="true">
                         <f:selectItem itemLabel="Seleccione el nombre " itemValue="" />
                         <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER} ${per.APEPER}" itemValue="${per.IDPER}"/>
@@ -39,11 +44,11 @@
                         <f:selectItem itemValue="C" itemLabel="Contado"/>
                     </p:selectOneRadio>
                     <p:outputLabel value = "Fecha Asignada" for="Asignacion"/>
-                   <p:selectOneMenu id="Asignacion" value="${VentaC.modelo.IDASICOM}" required="true">
+                    <p:selectOneMenu id="Asignacion" value="${VentaC.modelo.IDASICOM}" required="true">
                         <f:selectItem itemLabel="Seleccione la fecha  " itemValue="" />
                         <f:selectItems value="${AsignacionC.listarA}" var="asi" itemLabel="${asi.FECASICOM}" itemValue="${asi.IDASICOM}"/>
                     </p:selectOneMenu>
-                    
+
                 </h:panelGrid>
                 <p:commandButton icon="pi pi-save" value="Agregar" oncomplete="PF('wdVenta').hide();" actionListener="${VentaC.registrar()}" 
                                  update="dlgVenta :frmVenta :mensaje" rendered="${VentaC.modelo.IDVEN == 0}"/>

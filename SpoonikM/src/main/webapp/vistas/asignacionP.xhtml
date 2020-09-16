@@ -9,6 +9,9 @@
     </h:head>
     <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
     <h:body>
+        <style>
+            body {background-color: darkgreen;}
+        </style>
         <h1>Seleccion de Comidas</h1>
         <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
         <p:menubar>
@@ -18,6 +21,7 @@
             <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
             <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
             <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
+            <p:menuitem value="venta" url="/SpoonikM/faces/vistas/venta.xhtml"/>
         </p:menubar>
         <h:form>
             <p:panelGrid columns="2">
@@ -29,26 +33,32 @@
             <p:ajax event="close" listener="${AsignacionPC.limpiar()}" update="dlgAsignacionP"/>
             <h:form id="dlgAsignacionP">
                 <h:panelGrid columns="1">
-                    <p:outputLabel value = "Seleccione la persona " for="Comida"/>
-                    <p:selectOneMenu id="Persona" value="${AsignacionPC.modelo.IDPER}" required="true">
-                        <f:selectItem itemLabel="Seleccione la persona " itemValue=" " />
-                        <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}"/>
-                    </p:selectOneMenu>
-                  <!-- <p:outputLabel value = "Seleccione la persona" for="minilista"/>
-                   <p:selectManyMenu id="minilista" value="${AsignacionPC.listarregistro}" converter="${themeConverter}"
-                                     var="t" filter="true" filterMatchMode="contains" showCheckbox="true">
-                       <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}" />
-                       <p:column>
-                           <h:outputText value="${per.NOMPER} ${per.APEPER}" />
-                       </p:column>
-                   </p:selectManyMenu>-->
-                    
                     <p:outputLabel value = "Seleccione la comida " for="Comida"/>
                     <p:selectOneMenu id="Comida" value="${AsignacionPC.modelo.IDASICOM}" required="true">
                         <f:selectItem itemLabel="Seleccione la Comida " itemValue=" " />
                         <f:selectItems value="${AsignacionC.listarA}" var="asc" itemLabel="${asc.comida.NOMCOM}" itemValue="${asc.comida.IDCOM}"/>
                     </p:selectOneMenu>
+                    <!--                <p:outputLabel value = "Seleccione la persona " for="Persona"/>-->
 
+
+                    <!-- <p:selectOneMenu id="Persona" value="${AsignacionPC.modelo.IDPER}" required="true">
+                        <f:selectItem itemLabel="Seleccione la persona " itemValue=" " />
+                        <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}"/>
+                    </p:selectOneMenu>-->
+                    <p:outputLabel for="Personas" value="Personas:" />
+                    <p:selectCheckboxMenu id="Personas" value="${AsignacionPC.personlist}" label="Ingrese personas" multiple="true"
+                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px">                       
+                        <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}"/>
+                    </p:selectCheckboxMenu>
+
+                    <!-- <p:outputLabel value = "Seleccione la persona" for="minilista"/>
+                     <p:selectManyMenu id="minilista" value="${AsignacionPC.listarregistro}" converter="${themeConverter}"
+                                       var="t" filter="true" filterMatchMode="contains" showCheckbox="true">
+                         <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}" />
+                         <p:column>
+                             <h:outputText value="${per.NOMPER} ${per.APEPER}" />
+                         </p:column>
+                     </p:selectManyMenu>-->                   
                     <p:commandButton icon="pi pi-save" value="agregar" oncomplete="PF('wdAsignacionP').hide();" actionListener="${AsignacionPC.registrar()}" 
                                      update="dlgAsignacionP :frmAsignacionP :mensaje" rendered="${AsignacionPC.modelo.IDASIPER == 0}"/>
                     <p:commandButton icon="pi pi-save" value="Actualizar" oncomplete="PF('wdAsignacionP').hide();" actionListener="${AsignacionPC.editar()}" 
@@ -58,20 +68,31 @@
         </p:dialog>
         <h:form id="frmAsignacionP">
             <p:dataTable value="${AsignacionPC.listarAP}" var="ap">
-                <p:column headerText="NombrePersona">
-                    <h:outputText value="${ap.persona.NOMPER}"/>                    
-                </p:column>
-                <p:column headerText="ApellidoPersona">
-                    <h:outputText value="${ap.persona.APEPER}"/>                    
+                <f:facet name="header">
+                    Expande la flecha para ver las personas
+                </f:facet>
+                <p:column style="width:16px">
+                    <p:rowToggler />
                 </p:column>
                 <p:column headerText="NombreComida">
                     <h:outputText value="${ap.asignacion.comida.NOMCOM}"/>                    
                 </p:column>
                 <p:column headerText="TipoComida">
                     <h:outputText value="${ap.asignacion.comida.TIPCOM}">
-                        <f:converter converterId="tipopersona"/>
+                        <f:converter converterId="tipoproducto"/>
                     </h:outputText>                    
                 </p:column>
+                <p:rowExpansion>
+                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:300px">
+                        <f:facet name="Cabecera"/>
+
+                        <h:outputText value="Nombre Persona:" />
+                        <h:outputText value="${ap.persona.NOMPER}" />
+
+                        <h:outputText value="ApellidoPersona" />
+                        <h:outputText value="${ap.persona.APEPER}" />                     
+                    </p:panelGrid>
+                </p:rowExpansion>
                 <p:column headerText="ACCIONES">
                     <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdAsignacionP').show();" actionListener="${AsignacionPC.llenardatos(ap)}" 
                                      update=":dlgAsignacionP :frmAsignacionP :mensaje"/>

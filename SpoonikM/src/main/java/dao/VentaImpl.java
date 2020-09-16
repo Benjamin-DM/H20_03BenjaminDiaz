@@ -94,7 +94,7 @@ public class VentaImpl extends Conexion implements ICrud<Venta> {
                     p.setNOMPER(rs1.getString("NOMPER"));
                     p.setAPEPER(rs1.getString("APEPER"));
                     p.setIDPER(rs1.getInt("IDPER"));
-                    a.setFECASICOM(rs1.getString("FECASICOM"));
+                    a.setFECASICOM(rs1.getDate("FECASICOM"));
                     a.setIDASICOM(rs1.getInt("IDASICOM"));
                     v.setTIPVEN(rs1.getString("TIPVEN"));
                     v.setPersona(p);
