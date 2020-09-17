@@ -26,6 +26,10 @@
         <h:form>
             <p:panelGrid columns="2">
                 <p:commandButton value="Agregar Persona" oncomplete="PF('wdAsignacionP').show(); "/>
+                <h:form>
+                    <p:commandButton icon="fa fa-fw fa-download" value="ExportarPDF" ajax="false" actionListener="${reporteC.reportConsumo()}"
+                                     onclick="this.form.target = '_blank'"/>
+                </h:form>
             </p:panelGrid>
         </h:form>
         <!-- Dialogo -->
@@ -38,18 +42,16 @@
                         <f:selectItem itemLabel="Seleccione la Comida " itemValue=" " />
                         <f:selectItems value="${AsignacionC.listarA}" var="asc" itemLabel="${asc.comida.NOMCOM}" itemValue="${asc.comida.IDCOM}"/>
                     </p:selectOneMenu>
-                    <!--                <p:outputLabel value = "Seleccione la persona " for="Persona"/>-->
-
-
-                    <!-- <p:selectOneMenu id="Persona" value="${AsignacionPC.modelo.IDPER}" required="true">
+                    <p:selectOneMenu id="Persona" value="${AsignacionPC.modelo.IDPER}" required="true">
                         <f:selectItem itemLabel="Seleccione la persona " itemValue=" " />
                         <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}"/>
-                    </p:selectOneMenu>-->
-                    <p:outputLabel for="Personas" value="Personas:" />
-                    <p:selectCheckboxMenu id="Personas" value="${AsignacionPC.personlist}" label="Ingrese personas" multiple="true"
-                                          filter="true" filterMatchMode="startsWith" panelStyle="width:250px">                       
-                        <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per.IDPER}"/>
-                    </p:selectCheckboxMenu>
+                    </p:selectOneMenu>
+
+                    <!--                    <p:outputLabel for="Personas" value="Personas:" />
+                                        <p:selectCheckboxMenu id="Personas" value="${AsignacionPC.personlist}" label="Ingrese personas" multiple="true"
+                                                              filter="true" filterMatchMode="startsWith" panelStyle="width:250px">                       
+                                            <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER}" itemValue="${per}"/>
+                                        </p:selectCheckboxMenu>-->
 
                     <!-- <p:outputLabel value = "Seleccione la persona" for="minilista"/>
                      <p:selectManyMenu id="minilista" value="${AsignacionPC.listarregistro}" converter="${themeConverter}"
@@ -67,36 +69,24 @@
             </h:form>
         </p:dialog>
         <h:form id="frmAsignacionP">
-            <p:dataTable value="${AsignacionPC.listarAP}" var="ap">
-                <f:facet name="header">
-                    Expande la flecha para ver las personas
-                </f:facet>
-                <p:column style="width:16px">
-                    <p:rowToggler />
+            <p:dataTable var="asig" value="#{AsignacionPC.listarAP}" sortBy="#{asig.asignacion.comida.NOMCOM}" expandableRowGroups="true">
+                <p:headerRow>
+                    <p:column colspan="3">
+                        <h:outputText value="#{asig.asignacion.comida.NOMCOM}" />
+                    </p:column>
+                </p:headerRow>
+                <p:column headerText="PERSONA">
+                    <h:outputText value="#{asig.persona.NOMPER}" />
                 </p:column>
-                <p:column headerText="NombreComida">
-                    <h:outputText value="${ap.asignacion.comida.NOMCOM}"/>                    
+                <p:column headerText="TIPO DE COMIDA">
+                    <h:outputText value="#{asig.asignacion.comida.TIPCOM}">
+                        <f:converter converterId = "tipoproducto"/>
+                    </h:outputText>
                 </p:column>
-                <p:column headerText="TipoComida">
-                    <h:outputText value="${ap.asignacion.comida.TIPCOM}">
-                        <f:converter converterId="tipoproducto"/>
-                    </h:outputText>                    
-                </p:column>
-                <p:rowExpansion>
-                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:300px">
-                        <f:facet name="Cabecera"/>
-
-                        <h:outputText value="Nombre Persona:" />
-                        <h:outputText value="${ap.persona.NOMPER}" />
-
-                        <h:outputText value="ApellidoPersona" />
-                        <h:outputText value="${ap.persona.APEPER}" />                     
-                    </p:panelGrid>
-                </p:rowExpansion>
                 <p:column headerText="ACCIONES">
-                    <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdAsignacionP').show();" actionListener="${AsignacionPC.llenardatos(ap)}" 
+                    <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdAsignacionP').show();" actionListener="${AsignacionPC.llenardatos(asig)}" 
                                      update=":dlgAsignacionP :frmAsignacionP :mensaje"/>
-                    <p:commandButton icon="ui-icon-circle-close" actionListener="${AsignacionPC.eliminar(ap)}" update=":frmAsignacionP :mensaje :dlgAsignacionP" />
+                    <p:commandButton icon="ui-icon-circle-close" actionListener="${AsignacionPC.eliminar(asig)}" update=":frmAsignacionP :mensaje :dlgAsignacionP" />
                 </p:column>
             </p:dataTable>
         </h:form>

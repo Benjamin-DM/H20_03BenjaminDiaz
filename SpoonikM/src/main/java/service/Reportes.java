@@ -1,9 +1,13 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package service;
 
 import dao.Conexion;
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.Map;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletOutputStream;
@@ -20,14 +24,14 @@ import net.sf.jasperreports.export.SimpleXlsxReportConfiguration;
 
 /**
  *
- * @author USUARIO
+ * @author Usuario
  */
-public class Reportes  extends Conexion{
-    public void exportarPDFGlobal(Map parameters, String url, String nomPDF) throws JRException, IOException, Exception {
+public class Reportes extends Conexion{
+     public void exportarPDFGlobal(Map parameters, String url, String nomPDF) throws JRException, IOException, Exception {
         this.conectar();
         try {
             File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("Reportes/" + url + ""));
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, this.getCn());
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, this.conectar());
             HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
             response.addHeader("Content-disposition", "attachment; filename=" + nomPDF + "");
             try ( ServletOutputStream stream = response.getOutputStream()) {
@@ -44,7 +48,7 @@ public class Reportes  extends Conexion{
         this.conectar();
 
         File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("reportes/" + url + ""));
-        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, this.getCn());
+        JasperPrint jasperPrint = JasperFillManager.fillReport(jasper.getPath(), parameters, this.conectar());
         JRXlsxExporter exporter = new JRXlsxExporter();
 //
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -70,9 +74,5 @@ public class Reportes  extends Conexion{
         stream.close();
         FacesContext.getCurrentInstance().responseComplete();
     }
-
-    private Connection getCn() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-}
+}  
 

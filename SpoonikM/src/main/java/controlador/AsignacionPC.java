@@ -53,12 +53,8 @@ public class AsignacionPC implements Serializable {
 
     public void registrar() {
         try {
-            for (Persona p : personlist){
-                   modelo.getIDPER(p.getIDPER()); 
-                   dao.registrar(modelo);
-                   System.out.println("acá hay " + p);
-            }
-            
+
+            dao.registrar(modelo);
             System.out.println("Asignacion: " + modelo.toString());
 //            for (Persona per : listarregistro) {
 //                modelo.setIDPER(per.getIDPER());

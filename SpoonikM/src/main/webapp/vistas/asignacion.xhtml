@@ -26,6 +26,10 @@
         <h:form>
             <p:panelGrid columns="2">
                 <p:commandButton value="Add AsignacionComida" oncomplete="PF('wdAsignacion').show(); "/>
+                <h:form>
+                    <p:commandButton icon="fa fa-fw fa-download" value="ExportarPDF" ajax="false" actionListener="${reporteC.reportFecha()}"
+                                     onclick="this.form.target = '_blank'"/>
+                </h:form>
             </p:panelGrid>
         </h:form>
         <!-- esto es mi dialogo-->

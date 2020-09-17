@@ -59,9 +59,7 @@ public class AsignacionP {
         return "AsignacionP{" + "IDASIPER=" + IDASIPER + ", IDPER=" + IDPER + ", IDASICOM=" + IDASICOM + ", persona=" + persona + ", asignacion=" + asignacion + '}';
     }
 
-    public void getIDPER(int idper) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     
 }

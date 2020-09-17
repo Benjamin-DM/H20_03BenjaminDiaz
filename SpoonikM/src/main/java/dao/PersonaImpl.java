@@ -19,8 +19,8 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
             ps.setString(1, modelo.getNOMPER());
             ps.setString(2, modelo.getAPEPER());
             ps.setString(3, modelo.getAPEMATPER());
-            ps.setInt(4, modelo.getDNIPER());
-            ps.setInt(5, modelo.getTELPER());
+            ps.setString(4, modelo.getDNIPER());
+            ps.setString(5, modelo.getTELPER());
             ps.setString(6, modelo.getSEXPER());            
             ps.setString(7, modelo.getTIPPER());
             ps.executeUpdate();
@@ -41,10 +41,10 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
             ps.setString(1, modelo.getNOMPER());
             ps.setString(2, modelo.getAPEPER());
             ps.setString(3, modelo.getAPEPER());
-            ps.setInt(4, modelo.getDNIPER());
+            ps.setString(4, modelo.getDNIPER());
             ps.setString(5, modelo.getESTPER());
             ps.setString(6, modelo.getTIPPER());
-            ps.setInt(7, modelo.getTELPER());
+            ps.setString(7, modelo.getTELPER());
             ps.setString(8, modelo.getSEXPER());
             ps.setInt(9, modelo.getIDPER());
             ps.executeUpdate();
@@ -88,8 +88,8 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
                 p.setAPEPER(rs.getString("APEPER"));
                 p.setAPEMATPER(rs.getString("APEMATPER"));
                 p.setTIPPER(rs.getString("TIPPER"));
-                p.setDNIPER(rs.getInt("DNIPER"));
-                p.setTELPER(rs.getInt("TELPER"));
+                p.setDNIPER(rs.getString("DNIPER"));
+                p.setTELPER(rs.getString("TELPER"));
                 p.setSEXPER(rs.getString("SEXPER"));
                 p.setESTPER(rs.getString("ESTPER"));
                 listaPersona.add(p);
