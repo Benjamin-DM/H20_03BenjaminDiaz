@@ -10,12 +10,12 @@
     </h:head>
     <h:body>
         <style>
-            body {background-color: darkgreen;}
+            body {background-color: #D1CCD1;}
         </style>
         <h1>Persona</h1>
         <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
         <p:menubar>
-                <p:menuitem value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
+                <p:menuitem class="pi pi-home" value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
                 <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
                 <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
                 <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
@@ -25,7 +25,7 @@
             </p:menubar>
         <h:form>
             <p:panelGrid columns="2">
-                <p:commandButton value="Add Persona" oncomplete="PF('wdPersona').show(); "/>
+                <p:commandButton icon="pi pi-user-plus" value="Add Persona" oncomplete="PF('wdPersona').show(); "/>
                 <h:form>
                     <p:commandButton icon="fa fa-fw fa-download" value="ExportarPDF" ajax="false" actionListener="${reporteC.reportPersona}"
                                      onclick="this.form.target = '_blank'"/>
@@ -112,7 +112,7 @@
                 <p:column headerText="ACCIONES">
                     <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdPersona').show();" actionListener="${personaC.llenardatos(p)}" 
                                      update=":dlgPersona"/>
-                    <p:commandButton icon="ui-icon-circle-close" actionListener="${personaC.eliminar(p)}" update=":frmPersona :mensaje" />
+                    <p:commandButton icon="pi pi-trash" actionListener="${personaC.eliminar(p)}" update=":frmPersona :mensaje" />
                 </p:column>
             </p:dataTable>
         </h:form>      

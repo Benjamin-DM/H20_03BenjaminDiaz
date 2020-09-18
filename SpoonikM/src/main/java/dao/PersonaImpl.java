@@ -104,6 +104,14 @@ public class PersonaImpl extends Conexion implements ICrud<Persona>{
         }
         return listaPersona;
     }
+    public boolean existe(Persona modelo, List<Persona> listaModelo) {
+        for (Persona per : listaModelo) {
+            if (modelo.equals(per)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public List<Persona> listar(Persona modelo) throws Exception {

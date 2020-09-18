@@ -10,12 +10,12 @@
     </h:head>
     <h:body>
         <style>
-            body {background-color: darkgreen;}
+            body {background-color: #D1CCD1;}
         </style>
         <h1>Producto</h1>
         <h:form>
              <p:menubar>
-                <p:menuitem value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
+                <p:menuitem class="pi pi-home" value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
                 <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
                 <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
                 <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
@@ -27,7 +27,7 @@
         <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
         <h:form>
             <p:panelGrid columns="2">
-                <p:commandButton value="Nuevo Producto" oncomplete="PF('wdProducto').show(); "/>            
+                <p:commandButton icon="pi pi-user-plus" value="Nuevo Producto" oncomplete="PF('wdProducto').show(); "/>            
             </p:panelGrid>
         </h:form>
 
@@ -96,7 +96,7 @@
                 <p:column headerText="ACCIONES">
                     <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdProducto').show();" actionListener="${productoC.llenardatos(p)}" 
                                      update=":dlgProducto"/>
-                    <p:commandButton icon="ui-icon-circle-close" actionListener="${productoC.eliminar(p)}" update=":frmproducto :mensaje" />
+                    <p:commandButton icon="pi pi-trash" actionListener="${productoC.eliminar(p)}" update=":frmproducto :mensaje" />
 
                 </p:column>
             </p:dataTable>

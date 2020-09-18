@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import modelo.Persona;
 
@@ -45,10 +47,18 @@ public class PersonaC implements Serializable {
 
     public void registrar() {
         try {
-            dao.registrar(modelo);
-            System.out.println("Persona: " + modelo.toString());
-            listar();
-        } catch (Exception e) {
+            if (dao.existe(modelo, listarP) == false) {
+                dao.registrar(modelo);
+                System.out.println("Persona: " + modelo.toString());
+                listar();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_FATAL,
+                                "La Persona que intentaste registrar, ya existe.",
+                                null));
+
+            }
+        }catch (Exception e) {
             System.out.println("Error al registrar PersonaC: " + e.getMessage());
         }
     }
