@@ -11,7 +11,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import modelo.Venta;
 
-@Named(value = "VentaC")
+@Named(value = "ventaC")
 @SessionScoped
 public class VentaC implements Serializable {
 
@@ -61,13 +61,15 @@ public class VentaC implements Serializable {
     public void editar() {
         try {
             dao.editar(modelo);
+            listar();
         } catch (Exception e) {
             System.out.println("Error al editar VentaC" + e.getMessage());
         }
     }
 
     public void eliminar(Venta ven) {
-        try {     
+        try {  
+           System.out.println("El item es" + ven);
             dao.eliminar(ven);
             listar();
         } catch (Exception e) {

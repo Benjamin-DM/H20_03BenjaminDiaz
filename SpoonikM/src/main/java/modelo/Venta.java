@@ -8,6 +8,19 @@ public class Venta {
   private Persona persona= new Persona();
   private Asignacion asignacion =new Asignacion();
 
+    public Venta() {
+    }
+
+  
+    public Venta(int IDVEN, int IDPER, String TIPVEN, int IDASICOM, Persona persona , Asignacion asignacion) {
+        this.IDVEN = IDVEN;
+        this.IDPER = IDPER;
+        this.TIPVEN = TIPVEN;
+        this.IDASICOM = IDASICOM;
+        this.persona = persona;
+        this.asignacion = asignacion;
+    }
+
     public int getIDVEN() {
         return IDVEN;
     }

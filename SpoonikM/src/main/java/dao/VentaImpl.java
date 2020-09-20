@@ -23,7 +23,7 @@ public class VentaImpl extends Conexion implements ICrud<Venta> {
             ps.close();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Error en registrar VENTADAO" + e.getMessage());
+            System.out.println("Error en registrar VentaDAO" + e.getMessage());
         } finally {
             this.desconectar();
         }
@@ -99,7 +99,9 @@ public class VentaImpl extends Conexion implements ICrud<Venta> {
                     v.setTIPVEN(rs1.getString("TIPVEN"));
                     v.setPersona(p);
                     v.setAsignacion(a);
+                    v.setIDVEN(rs1.getInt("IDVEN"));
                     listaVenta.add(v);
+                    
                 }
                 rs1.close();
                 qs.close();

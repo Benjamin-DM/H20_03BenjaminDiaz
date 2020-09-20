@@ -12,6 +12,16 @@ public class Asignacion {
     private Date FECASICOM;
     private Comida comida = new Comida();
 
+    public Asignacion() {
+    }
+    
+
+    public Asignacion(int IDASICOM, int IDCOM, Date FECASICOM, Comida comida) {
+        this.IDASICOM = IDASICOM;
+        this.IDCOM = IDCOM;
+        this.FECASICOM = FECASICOM;
+    }
+
     public int getIDASICOM() {
         return IDASICOM;
     }

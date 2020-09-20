@@ -28,36 +28,36 @@
                 <p:commandButton icon="pi pi-user-plus" value="Add Venta" oncomplete="PF('wdVenta').show(); "/>
             </p:panelGrid>
         </h:form>
-        <p:dialog widgetVar="wdVenta" modal="true" showEffect="clip" header="Nuevo Registro" resizable="false">
-            <p:ajax event="close" listener="${VentaC.limpiar()}" update=":dlgVenta"/>
+        <p:dialog widgetVar="wdVenta" id="dlgdatos" modal="true" showEffect="clip" header="Nuevo Registro" resizable="false">
+            <p:ajax event="close" listener="${ventaC.limpiar()}" update=":dlgVenta"/>
             <h:form id="dlgVenta">
                 <h:panelGrid columns="2">
                     <p:outputLabel value = "Seleccione el nombre" for="Nombre"/>
-                    <p:selectOneMenu id="Nombre" value="${VentaC.modelo.IDPER}" required="true">
+                    <p:selectOneMenu id="Nombre" value="${ventaC.modelo.IDPER}" required="true">
                         <f:selectItem itemLabel="Seleccione el nombre " itemValue="" />
                         <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER} ${per.APEPER}" itemValue="${per.IDPER}"/>
                     </p:selectOneMenu>
                     <p:outputLabel value = "Tipo de pago" for="rbtTipo"/>
-                    <p:selectOneRadio value ="${VentaC.modelo.TIPVEN}" required="true" id="rbtTipo">
+                    <p:selectOneRadio value ="${ventaC.modelo.TIPVEN}" required="true" id="rbtTipo">
                         <f:selectItem itemValue="A" itemLabel="Acuerdo"/>
                         <f:selectItem itemValue="P" itemLabel="Planilla"/>
                         <f:selectItem itemValue="C" itemLabel="Contado"/>
                     </p:selectOneRadio>
                     <p:outputLabel value = "Fecha Asignada" for="Asignacion"/>
-                    <p:selectOneMenu id="Asignacion" value="${VentaC.modelo.IDASICOM}" required="true">
+                    <p:selectOneMenu id="Asignacion" value="${ventaC.modelo.IDASICOM}" required="true">
                         <f:selectItem itemLabel="Seleccione la fecha  " itemValue="" />
                         <f:selectItems value="${AsignacionC.listarA}" var="asi" itemLabel="${asi.FECASICOM}" itemValue="${asi.IDASICOM}"/>
                     </p:selectOneMenu>
 
                 </h:panelGrid>
-                <p:commandButton icon="pi pi-save" value="Agregar" oncomplete="PF('wdVenta').hide();" actionListener="${VentaC.registrar()}" 
-                                 update="dlgVenta :frmVenta :mensaje" rendered="${VentaC.modelo.IDVEN == 0}"/>
-                <p:commandButton icon="pi pi-save" value="Actualizar" oncomplete="PF('wdVenta').hide();" actionListener="${VentaC.editar()}" 
-                                 update="dlgVenta :frmVenta :mensaje" rendered="${VentaC.modelo.IDVEN != 0}"/>
+                <p:commandButton icon="pi pi-save" value="agregar" oncomplete="PF('wdVenta').hide();" actionListener="${ventaC.registrar()}" 
+                                 update="dlgVenta :frmVenta :mensaje" rendered="${ventaC.modelo.IDVEN == 0}"/>
+                <p:commandButton icon="pi pi-save" value="Actualizar" oncomplete="PF('wdVenta').hide();" actionListener="${ventaC.editar()}" 
+                                 update="dlgVenta :frmVenta :mensaje" rendered="${ventaC.modelo.IDVEN != 0}"/>
             </h:form> 
         </p:dialog>
         <h:form id="frmVenta"> 
-            <p:dataTable value="${VentaC.listarV}" var="v">
+            <p:dataTable value="${ventaC.listarV}" var="v">
                 <p:column headerText="Nombre">
                     <h:outputText value="${v.persona.NOMPER}"/>                    
                 </p:column>
@@ -73,9 +73,9 @@
                                    
                 </p:column>
                 <p:column headerText="ACCIONES">
-                    <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdVenta').show();" actionListener="${VentaC.llenardatos(v)}" 
+                    <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdVenta').show();" actionListener="${ventaC.llenardatos(v)}" 
                                      update=":dlgVenta"/>
-                    <p:commandButton icon="pi pi-trash" actionListener="${VentaC.eliminar(v)}" update=":frmVenta :mensaje :dlgVenta" />
+                    <p:commandButton icon="pi pi-trash" actionListener="${ventaC.eliminar(v)}" update=":frmVenta :mensaje :dlgVenta" />
                 </p:column>
             </p:dataTable>
         </h:form>      

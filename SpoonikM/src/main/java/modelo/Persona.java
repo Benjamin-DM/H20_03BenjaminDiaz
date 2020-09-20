@@ -14,6 +14,22 @@ public class Persona {
     private String TELPER;
     private String ESTPER;
 
+    public Persona() {
+    }
+
+    
+    public Persona(int IDPER, String NOMPER, String APEPER, String APEMATPER, String DNIPER, String TIPPER, String SEXPER, String TELPER, String ESTPER) {
+        this.IDPER = IDPER;
+        this.NOMPER = NOMPER;
+        this.APEPER = APEPER;
+        this.APEMATPER = APEMATPER;
+        this.DNIPER = DNIPER;
+        this.TIPPER = TIPPER;
+        this.SEXPER = SEXPER;
+        this.TELPER = TELPER;
+        this.ESTPER = ESTPER;
+    }
+
     public int getIDPER() {
         return IDPER;
     }
