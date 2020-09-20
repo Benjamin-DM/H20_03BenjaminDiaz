@@ -69,7 +69,8 @@
                     </h:outputText>
                 </p:column>
                 <p:column headerText="Asignacion">
-                    <h:outputText value="${v.asignacion.FECASICOM}"/>                    
+                    <h:outputText value="${v.asignacion.FECASICOM}"> <f:convertDateTime pattern="dd-MMM-yyyy"/>  </h:outputText>
+                                   
                 </p:column>
                 <p:column headerText="ACCIONES">
                     <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdVenta').show();" actionListener="${VentaC.llenardatos(v)}" 
