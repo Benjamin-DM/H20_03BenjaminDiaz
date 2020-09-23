@@ -23,7 +23,7 @@ public class ReporteC implements Serializable {
     Reportes reporte = new Reportes();
         try{
            Map<String, Object> parameters = new HashMap();
-           reporte.exportarPDFGlobal(parameters,"ReportPersona.jasper","ReporteDePersonas.pdf");
+           reporte.exportarPDFGlobal(parameters,"PersonaRep.jasper","ReporteDePersonas.pdf");
         } catch (Exception e) {
             System.out.println("error:"+e);
         }
