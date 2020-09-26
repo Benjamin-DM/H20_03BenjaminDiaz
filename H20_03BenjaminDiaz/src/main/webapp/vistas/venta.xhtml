@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:head>
+        <title>Venta</title>
+    </h:head>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+    <h:body>
+        <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
+        <p:menubar>
+            <p:menuitem class="pi pi-home" value="Inicio" url="/H20_03BenjaminDiaz/faces/index.xhtml"/>
+            <p:menuitem value="Venta" url="/H20_03BenjaminDiaz/faces/vistas/venta.xhtml"/>
+        </p:menubar>    
+        <h:form>
+            <p:panelGrid columns="2">
+                <p:commandButton icon="pi pi-user-plus" value="Add Venta" oncomplete="PF('wdVenta').show(); "/>
+            </p:panelGrid>
+        </h:form>
+        <p:dialog widgetVar="wdVenta" id="dlgdatos" modal="true" showEffect="clip" header="Nuevo Registro" resizable="false">
+            <p:ajax event="close" listener="${ventaC.limpiar()}" update=":dlgVenta"/>
+            <h:form id="dlgVenta">
+                <h:panelGrid columns="2">
+                    <p:outputLabel value = "Seleccione Comensal" for="Nombre"/>
+                    <p:selectOneMenu id="Nombre" value="${VentaC.modelo.IDPER}" required="true">
+                        <f:selectItem itemLabel="Seleccione el nombre " itemValue="" />
+                        <f:selectItems value="${personaC.listarP}" var="per" itemLabel="${per.NOMPER} ${per.APEPATPER}" itemValue="${per.IDPER}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value = "Tipo de venta" for="rbtTipo"/>
+                    <p:selectOneRadio value ="${ventaC.modelo.TIPVEN}" required="true" id="rbtTipo">
+                        <f:selectItem itemValue="D" itemLabel="Delivery"/>
+                        <f:selectItem itemValue="L" itemLabel="Local"/>
+                    </p:selectOneRadio>
+                    <p:outputLabel value = "Tipo de pago" for="rbtPago"/>
+                    <p:selectOneRadio value ="${ventaC.modelo.PAGVEN}" required="true" id="rbtPago">
+                        <f:selectItem itemValue="E" itemLabel="Efectivo"/>
+                        <f:selectItem itemValue="T" itemLabel="Tarjeta"/>
+                    </p:selectOneRadio>
+                    <p:outputLabel value = "Sucursal" for="NombresSuc"/>
+                    <p:selectOneMenu id="NombresSuc" value="${SucursalC.modelo.IDSUC}" required="true" >
+                        <f:selectItem itemLabel="Seleccione la fecha  " itemValue="" />
+                        <f:selectItems value="${SucursalC.listarS}" var="asi" itemLabel="${asi.NOMSUC}" itemValue="${asi.IDSUC}"/>
+                    </p:selectOneMenu>
+                    <p:outputLabel value="Fecha" for="FechaSuc"/>
+                    <p:calendar  id="FechaSuc" placeholder="dia-mes-año" mask="true" value="${ventaC.modelo.FECVEN}" pattern="dd/MM/yyyy" 
+                                 required="true" locale="es" requiredMessage="Falta designar la fecha" />
+
+                </h:panelGrid>
+                <p:commandButton icon="pi pi-save" value="agregar" oncomplete="PF('wdVenta').hide();" actionListener="${ventaC.registrar()}" 
+                                 update="dlgVenta :frmVenta :mensaje" rendered="${ventaC.modelo.IDVEN == 0}"/>
+                <p:commandButton icon="pi pi-save" value="Actualizar" oncomplete="PF('wdVenta').hide();" actionListener="${ventaC.editar()}" 
+                                 update="dlgVenta :frmVenta :mensaje" rendered="${ventaC.modelo.IDVEN != 0}"/>
+            </h:form> 
+        </p:dialog>
+        <h:form id="frmVenta"> 
+            <p:dataTable value="${ventaC.listarV}" var="v">
+                <p:column headerText="Nombre">
+                    <h:outputText value="${v.persona.NOMPER}"/>                    
+                </p:column>
+                <p:column headerText="Apellido">
+                    <h:outputText value="${v.persona.APEPATPER}"/>                    
+                </p:column>
+                <p:column headerText="TIPO ">
+                    <h:outputText value="${v.TIPVEN}">
+                    </h:outputText>
+                </p:column>
+                
+                <p:column headerText="Venta">
+                    <h:outputText value="${v.FECVEN}"> <f:convertDateTime pattern="dd-MMM-yyyy"/>  </h:outputText>                                   
+                </p:column>
+                <p:column headerText="ACCIONES">
+                    <p:commandButton icon="pi pi-refresh" oncomplete="PF('wdVenta').show();" actionListener="${ventaC.llenardatos(v)}" 
+                                     update=":dlgVenta"/>
+                    <p:commandButton icon="pi pi-trash" actionListener="${ventaC.eliminar(v)}" update=":frmVenta :mensaje :dlgVenta" />
+                </p:column>
+            </p:dataTable>
+        </h:form>      
+    </h:body>
+</html>
