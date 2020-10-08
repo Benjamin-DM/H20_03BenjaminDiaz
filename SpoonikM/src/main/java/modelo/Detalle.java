@@ -8,10 +8,34 @@ private int IDVENDET;
   private int CANVENDET;
   private String COMVENDET;
   private int IDASIPER;
+  private int IDPER;
+  private String TIPVEN;
+  private String  NOMPRO;
+  private String NOMPER;
+  private String APEPER;
   private Persona persona= new Persona();
   private AsignacionP asignacionP =new AsignacionP ();
   private Producto producto = new Producto ();
   private Venta venta = new Venta ();
+
+     public Detalle(int IDVENDET, int IDVEN, int IDPRO, int CANVENDET, String COMVENDET, int IDASIPER, int IDPER, String TIPVEN, String NOMPRO, String NOMPER, String APEPER, Persona persona,Producto producto) {
+        this.IDVENDET = IDVENDET;
+        this.IDVEN = IDVEN;
+        this.IDPRO = IDPRO;
+        this.CANVENDET = CANVENDET;
+        this.COMVENDET = COMVENDET;
+        this.IDASIPER = IDASIPER;
+        this.IDPER = IDPER;
+        this.TIPVEN = TIPVEN;
+        this.NOMPRO = NOMPRO;
+        this.NOMPER = NOMPER;
+        this.APEPER = APEPER;
+        this.persona = persona;
+        this.producto = producto;
+    }
+
+    public Detalle() {
+    }
 
     public int getIDVENDET() {
         return IDVENDET;
@@ -61,6 +85,46 @@ private int IDVENDET;
         this.IDASIPER = IDASIPER;
     }
 
+    public int getIDPER() {
+        return IDPER;
+    }
+
+    public void setIDPER(int IDPER) {
+        this.IDPER = IDPER;
+    }
+
+    public String getTIPVEN() {
+        return TIPVEN;
+    }
+
+    public void setTIPVEN(String TIPVEN) {
+        this.TIPVEN = TIPVEN;
+    }
+
+    public String getNOMPRO() {
+        return NOMPRO;
+    }
+
+    public void setNOMPRO(String NOMPRO) {
+        this.NOMPRO = NOMPRO;
+    }
+
+    public String getNOMPER() {
+        return NOMPER;
+    }
+
+    public void setNOMPER(String NOMPER) {
+        this.NOMPER = NOMPER;
+    }
+
+    public String getAPEPER() {
+        return APEPER;
+    }
+
+    public void setAPEPER(String APEPER) {
+        this.APEPER = APEPER;
+    }
+
     public Persona getPersona() {
         return persona;
     }
@@ -93,3 +157,5 @@ private int IDVENDET;
         this.venta = venta;
     }
 }
+
+   

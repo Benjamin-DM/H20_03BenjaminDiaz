@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Detalle</title>
+    </h:head>
+    <h:body> <style>
+            body {background-color: #D1CCD1;}
+        </style>
+        <h1>Detalle </h1>
+          <h:form>
+             <p:menubar>
+                <p:menuitem class="pi pi-home" value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
+                <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
+                <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
+                <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
+                <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
+                <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
+                <p:menuitem value="Venta" url="/SpoonikM/faces/vistas/venta.xhtml"/>
+            </p:menubar>  
+        </h:form>
+        <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
+        <h:form> 
+        </h:form>
+        <h:form>
+            <h:panelGrid columns="2">
+
+            <p:outputLabel value="Nombre del comensal" /> 
+                 <p:selectOneMenu value ="#{detalleC.detalle.IDPER}">
+                     <f:selectItem itemLabel="Seleccione el Comensal " itemValue="" />
+                     <f:selectItems value="#{personaC.listarP}" var ="Persona" itemValue="#{Persona.IDPER}" itemLabel="#{Persona.NOMPER} #{Persona.APEPER} " />
+                </p:selectOneMenu> 
+
+            <p:outputLabel value="Nombre del producto" /> 
+                 <p:selectOneMenu value ="#{detalleC.detalle.IDPRO}">
+                     <f:selectItem itemLabel="Seleccione el Producto " itemValue="" />
+                     <f:selectItems value="#{productoC.listarPr}" var ="Producto" itemValue="#{Producto.IDPRO}" itemLabel="#{Producto.NOMPRO}"/>
+                       </p:selectOneMenu>
+
+            <p:outputLabel value="Tipo de venta" /> 
+                <p:selectOneMenu value ="#{detalleC.detalle.TIPVEN}">
+                        <f:selectItem itemLabel="Seleccione el tipo de pago" itemValue="" />
+                        <f:selectItem itemValue="A" itemLabel="Acuerdo"/>
+                        <f:selectItem itemValue="P" itemLabel="Planilla"/>
+                        <f:selectItem itemValue="C" itemLabel="Contado"/>
+                </p:selectOneMenu>
+
+
+            </h:panelGrid>
+                <p:commandButton icon="pi pi-save" value="Agregar" actionListener="${detalleC.agregar()}" update=":tabla" />  
+
+          </h:form> 
+        <h:form id="tabla">
+            <p:dataTable value="${detalleC.lstDetalle}" var="p" >
+                <p:column headerText="COMENSAL">
+                    <h:outputText value="${p.NOMPER}"/>
+                </p:column>
+                <p:column headerText="NOMBRE DEPRODUCTO">
+                    <h:outputText value="${p.NOMPRO}"/>
+                </p:column>
+                <p:column headerText="TIPO DE VENTA">
+                    <h:outputText value="${p.TIPVEN}"/>
+                </p:column>
+                <p:column headerText="Eliminar">
+                     <p:commandButton icon="pi pi-save" value="Eliminar" actionListener="${detalleC.eliminar(p)}" update=":tabla" />  
+                </p:column>
+            </p:dataTable>   
+        </h:form>
+    </h:body>
+</html>
