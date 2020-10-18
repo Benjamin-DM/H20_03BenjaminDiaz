@@ -15,8 +15,8 @@ public class Conexion {
 
     public static Connection conectar() throws Exception {
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            cnx = DriverManager.getConnection("jdbc:sqlserver://localhost;databaseName= Spoonik", "sa", "123456");
+           Class.forName("oracle.jdbc.driver.OracleDriver");
+            cnx = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "C##ADMIN", "admin");
         } catch (ClassNotFoundException | SQLException e) {
             System.out.println("Error: " + e);
         }
