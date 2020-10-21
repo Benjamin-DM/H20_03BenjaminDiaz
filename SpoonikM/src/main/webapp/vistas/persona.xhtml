@@ -15,15 +15,15 @@
         <h1>Persona</h1>
         <p:growl id="mensaje" severity="info,fatal" showSummary="true" showDetail="true"/>
         <p:menubar>
-                <p:menuitem class="pi pi-home" value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
-                <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
-                <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
-                <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
-                <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
-                <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
-                <p:menuitem value="Venta" url="/SpoonikM/faces/vistas/venta.xhtml"/>    
-                <p:menuitem value="Detalle" url="/SpoonikM/faces/vistas/detalle.xhtml"/> 
-            </p:menubar>
+            <p:menuitem class="pi pi-home" value="Inicio" url="/SpoonikM/faces/index.xhtml"/>
+            <p:menuitem value="Producto" url="/SpoonikM/faces/vistas/producto.xhtml"/>
+            <p:menuitem value="Persona" url="/SpoonikM/faces/vistas/persona.xhtml"/>
+            <p:menuitem value="Comida" url="/SpoonikM/faces/vistas/comida.xhtml"/>
+            <p:menuitem value="Asignación" url="/SpoonikM/faces/vistas/asignacion.xhtml"/>
+            <p:menuitem value="Seleccion de Platos" url="/SpoonikM/faces/vistas/asignacionP.xhtml"/>
+            <p:menuitem value="Venta" url="/SpoonikM/faces/vistas/venta.xhtml"/>    
+            <p:menuitem value="Detalle" url="/SpoonikM/faces/vistas/detalle.xhtml"/> 
+        </p:menubar>
         <h:form>
             <p:panelGrid columns="2">
                 <p:commandButton icon="pi pi-user-plus" value="Add Persona" oncomplete="PF('wdPersona').show(); "/>
@@ -115,6 +115,14 @@
                                      update=":dlgPersona"/>
                     <p:commandButton icon="pi pi-trash" actionListener="${personaC.eliminar(p)}" update=":frmPersona :mensaje" />
                 </p:column>
+                <f:facet name="{Exporters}">
+                    <div style="float:right;padding-top: 5px;">
+                        <h:commandLink>
+                            <p:graphicImage name="/SpoonikM/faces/ImagenesDiseño/excel.jpg" width="24"/>
+                            <p:dataExporter type="xls" target="tbl" fileName="cars" />
+                        </h:commandLink>
+                    </div>
+                </f:facet>
             </p:dataTable>
         </h:form>      
     </h:body>
